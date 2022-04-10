@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-public class loginController {
+public class authController {
 
   @Autowired
   private LoginService loginService;

@@ -23,10 +23,6 @@ public class UserService {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  public User addRole(User user){
-    return userRepository.save(user);
-  }
-
   public void initUserRolesAndAdmin(){
     Role lecturerRole = new Role();
     lecturerRole.setRoleName("Lecturer");

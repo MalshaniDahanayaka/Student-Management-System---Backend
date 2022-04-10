@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.cors();
     httpSecurity.csrf().disable()
-            .authorizeRequests().antMatchers("/api/v1/auth/login", "/api/v1/auth/signup", "/api/v1/public").permitAll()
+            .authorizeRequests().antMatchers("/api/v1/auth/login", "/api/v1/auth/signup-student", "/api/v1/public").permitAll()
             .antMatchers(HttpHeaders.ALLOW).permitAll()
             .anyRequest().authenticated()
             .and()
