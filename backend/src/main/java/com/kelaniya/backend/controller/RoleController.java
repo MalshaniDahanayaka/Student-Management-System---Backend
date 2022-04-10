@@ -1,6 +1,6 @@
 package com.kelaniya.backend.controller;
 
-import com.kelaniya.backend.service.RoleService;
+import com.kelaniya.backend.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,13 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RoleController {
+
   @Autowired
-  private RoleService roleService;
+  public RoleController roleController;
 
-  @PostMapping("/role")
-  public Role createRole(@RequestBody Role role){
-    return  roleService.createRole(role);
+  @PostMapping("/api/v1/add-role")
+  public Role addRole(@RequestBody Role role){
+    return roleController.addRole(role);
   }
-
-
 }

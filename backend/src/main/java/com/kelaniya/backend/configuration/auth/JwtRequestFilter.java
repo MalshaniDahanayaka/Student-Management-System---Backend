@@ -1,8 +1,7 @@
 package com.kelaniya.backend.configuration.auth;
 
-
-import com.example.springbootauthwithjwt.service.JwtService;
-import com.example.springbootauthwithjwt.utils.JwtUtil;
+import com.kelaniya.backend.service.LoginService;
+import com.kelaniya.backend.utils.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +24,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private JwtService jwtService;
+    private LoginService jwtService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

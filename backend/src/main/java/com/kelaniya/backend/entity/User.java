@@ -1,30 +1,33 @@
 package com.kelaniya.backend.entity;
 
 import javax.persistence.*;
-
+import java.util.Set;
 
 @Entity
 public class User {
-
   @Id
-  private String id;
-  private String email;
+  private String username;
   private String password;
 
-  public String getId() {
-    return id;
+
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @JoinTable(name = "USER_ROLE",
+          joinColumns = {
+                  @JoinColumn(name = "USER_ID")
+          },
+          inverseJoinColumns = {
+                  @JoinColumn(name = "ROLE_ID")
+          }
+  )
+
+  private Set<Role> role;
+
+  public String getUsername() {
+    return username;
   }
 
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getPassword() {
@@ -35,4 +38,11 @@ public class User {
     this.password = password;
   }
 
+  public Set<Role> getRole() {
+    return role;
+  }
+
+  public void setRole(Set<Role> role) {
+    this.role = role;
+  }
 }
