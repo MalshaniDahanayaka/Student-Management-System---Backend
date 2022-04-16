@@ -2,7 +2,7 @@ package com.kelaniya.backend.service;
 
 import com.kelaniya.backend.entity.JwtRequest;
 import com.kelaniya.backend.entity.JwtResponse;
-import com.kelaniya.backend.entity.User;
+import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.repository.UserRepository;
 import com.kelaniya.backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,28 +38,28 @@ public class LoginService implements UserDetailsService {
 
     UserDetails userDetails = loadUserByUsername(username);
     String newToken = jwtUtil.generateToken(userDetails);
-    User user = userRepository.findById(username).get();
-    return new JwtResponse(user, newToken);
+    Users users = userRepository.findById(username).get();
+    return new JwtResponse(users, newToken);
   }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findById(username).get();
+    Users users = userRepository.findById(username).get();
 
-    if(user != null){
+    if(users != null){
       return new org.springframework.security.core.userdetails.User(
-        user.getUsername(),
-        user.getPassword(),
-        getAuthority(user)
+        users.getUsername(),
+        users.getPassword(),
+        getAuthority(users)
       );
     } else {
       throw new UsernameNotFoundException("Username is not found with username: "+ username);
     }
   }
 
-  private Set getAuthority(User user) {
+  private Set getAuthority(Users users) {
     Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-    user.getRole().forEach(role -> {
+    users.getRole().forEach(role -> {
       authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
     });
     return authorities;

@@ -1,8 +1,10 @@
 package com.kelaniya.backend.service;
 
 import com.kelaniya.backend.entity.Role;
-import com.kelaniya.backend.entity.User;
+import com.kelaniya.backend.entity.Students;
+import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.repository.RoleRepository;
+import com.kelaniya.backend.repository.StudentRepository;
 import com.kelaniya.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,14 +23,21 @@ public class StudentService {
   @Autowired
   private UserRepository userRepository;
 
-  public User signupStudent(User user){
+  @Autowired
+  private StudentRepository studentRepository;
+
+  public Users signupStudent(Users users){
     Role StudentRole = roleRepository.findById("Student").get();
 
     Set<Role> roles = new HashSet<>();
     roles.add(StudentRole);
-    user.setRole(roles);
+    users.setRole(roles);
 
-    user.setPassword(userService.getEncodePassword(user.getPassword()));
-    return userRepository.save(user);
+    users.setPassword(userService.getEncodePassword(users.getPassword()));
+    return userRepository.save(users);
+  }
+
+  public Students updateDetails(Students student) {
+    return studentRepository.save(student);
   }
 }
