@@ -1,20 +1,20 @@
 package com.kelaniya.backend.entity;
 
 public class JwtResponse {
-  private User user;
+  private Users users;
   private String jwtToken;
 
-  public JwtResponse(User user, String newToken) {
-    this.user = user;
+  public JwtResponse(Users users, String newToken) {
+    this.users = users;
     this.jwtToken = newToken;
   }
 
-  public User getUser() {
-    return user;
+  public Users getUser() {
+    return users;
   }
 
-  public void setUser(User user) {
-    this.user = user;
+  public void setUser(Users users) {
+    this.users = users;
   }
 
   public String getJwtToken() {

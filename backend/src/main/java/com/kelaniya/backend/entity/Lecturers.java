@@ -4,29 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Student {
+public class Lecturers {
+
   @Id
-  private String student_email;
-  private String student_id;
+  private String lecturer_email;
   private String first_name;
   private String last_name;
   private String department;
   private String profile_pic;
 
-  public String getStudent_email() {
-    return student_email;
+  public String getLecturer_email() {
+    return lecturer_email;
   }
 
-  public void setStudent_email(String student_email) {
-    this.student_email = student_email;
-  }
-
-  public String getStudent_id() {
-    return student_id;
-  }
-
-  public void setStudent_id(String student_id) {
-    this.student_id = student_id;
+  public void setLecturer_email(String lecturer_email) {
+    this.lecturer_email = lecturer_email;
   }
 
   public String getFirst_name() {
@@ -60,6 +52,4 @@ public class Student {
   public void setProfile_pic(String profile_pic) {
     this.profile_pic = profile_pic;
   }
-
-
 }
