@@ -1,9 +1,7 @@
 package com.kelaniya.backend.controller;
 
-import com.kelaniya.backend.entity.Lecturers;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,5 +12,4 @@ public class LectureController {
   public String lecture(){
     return "For Lecturer";
   }
-
 }
