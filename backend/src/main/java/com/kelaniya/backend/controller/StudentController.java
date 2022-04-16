@@ -1,5 +1,6 @@
 package com.kelaniya.backend.controller;
 
+import com.kelaniya.backend.entity.Student;
 import com.kelaniya.backend.entity.User;
 import com.kelaniya.backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,10 @@ public class StudentController {
   @PostMapping("/api/v1/auth/signup-student")
   public User addUser(@RequestBody User user){
     return  studentService.signupStudent(user);
+  }
+
+  @PostMapping("/api/v1/student/update-details")
+  public Student updateDetails(@RequestBody Student student){
+      return studentService.updateDetails(student);
   }
 }
