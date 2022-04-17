@@ -41,9 +41,7 @@ public class  Lecturers {
     return department;
   }
 
-  public void setDepartment(String department) {
-    this.department = department;
-  }
+
 
   public String getProfile_pic() {
     return profile_pic;

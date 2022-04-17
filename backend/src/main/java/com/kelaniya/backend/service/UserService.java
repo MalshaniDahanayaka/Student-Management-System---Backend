@@ -1,7 +1,7 @@
 package com.kelaniya.backend.service;
 
 import com.kelaniya.backend.entity.Role;
-import com.kelaniya.backend.entity.Users;
+import com.kelaniya.backend.entity.User;
 import com.kelaniya.backend.repository.RoleRepository;
 import com.kelaniya.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +24,18 @@ public class UserService {
   private PasswordEncoder passwordEncoder;
 
   public void initUserRolesAndAdmin(){
-
-    // create lecturer role
     Role lecturerRole = new Role();
     lecturerRole.setRoleName("Lecturer");
     lecturerRole.setRoleDescription("Lecturer role");
     roleRepository.save(lecturerRole);
 
-    // create student role
     Role studentRole = new Role();
     studentRole.setRoleName("Student");
     studentRole.setRoleDescription("Student role");
     roleRepository.save(studentRole);
 
     // create lecture user
-    Users lecture = new Users();
+    User lecture = new User();
     lecture.setUsername("lecture1");
     lecture.setPassword(getEncodePassword("lecture123"));
     Set<Role> lectureUserRoles = new HashSet<>();
@@ -47,7 +44,7 @@ public class UserService {
     userRepository.save(lecture);
 
     // create student user
-    Users student = new Users();
+    User student = new User();
     student.setUsername("student1");
     student.setPassword(getEncodePassword("student123"));
     Set<Role> studentUserRoles = new HashSet<>();
