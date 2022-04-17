@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Lecturers {
+public class  Lecturers {
 
   @Id
   private String lecturer_email;
