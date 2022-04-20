@@ -39,7 +39,7 @@ public class UserService {
 
     // create lecture user
     Users lecture = new Users();
-    lecture.setUsername("lecture1");
+    lecture.setUsername("lecture1@kln.ac.lk");
     lecture.setPassword(getEncodePassword("lecture123"));
     Set<Role> lectureUserRoles = new HashSet<>();
     lectureUserRoles.add(lecturerRole);
@@ -48,7 +48,7 @@ public class UserService {
 
     // create student user
     Users student = new Users();
-    student.setUsername("student1");
+    student.setUsername("student1@kln.ac.lk");
     student.setPassword(getEncodePassword("student123"));
     Set<Role> studentUserRoles = new HashSet<>();
     studentUserRoles.add(studentRole);
