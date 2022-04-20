@@ -1,6 +1,7 @@
 package com.kelaniya.backend.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "lecture_notes")
@@ -15,7 +16,7 @@ public class LecNotes {
     private String description;
     private byte[] data;
     private String docType;
-    private String date;
+    private Date date;
 
 
     public LecNotes(String subjectName, String description,byte[] data,String docType) {
@@ -57,13 +58,7 @@ public class LecNotes {
         this.data = data;
     }
 
-    public String getDate() {
-        return date;
-    }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     public String getDocType() {
         return docType;
@@ -71,5 +66,13 @@ public class LecNotes {
 
     public void setDocType(String docType) {
         this.docType = docType;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

@@ -4,7 +4,7 @@ import com.kelaniya.backend.entity.LecNotes;
 import com.kelaniya.backend.entity.Students;
 import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.repository.LecNoteRepository;
-import com.kelaniya.backend.service.LectureNotesService;
+import com.kelaniya.backend.service.LectureService;
 import com.kelaniya.backend.service.StudentService;
 import com.kelaniya.backend.service.imgServices.ImageUploadResponse;
 import com.kelaniya.backend.utils.ImgFileUploadUtil;
@@ -32,7 +32,7 @@ public class StudentController {
   private LecNoteRepository lecNoteRepository;
 
   @Autowired
-  private LectureNotesService lectureNotesService;
+  private LectureService lectureService;
 
 
   @GetMapping("/api/v1/student")
@@ -81,14 +81,13 @@ public class StudentController {
   }
 
 
-      @GetMapping("/downloadFile/{fileId}")
+    @GetMapping("/downloadFile/{fileId}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Integer fileId){
-        LecNotes doc = lectureNotesService.getFile(fileId).get();
-        System.out.println(doc.getSubjectName());
+      LecNotes doc = lectureService.getFile(fileId).get();
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(doc.getDocType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=\""+doc.getSubjectName()+"\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=")
                 .body(new ByteArrayResource(doc.getData()));
     }
 
