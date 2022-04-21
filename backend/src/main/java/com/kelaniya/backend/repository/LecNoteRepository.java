@@ -6,4 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface LecNoteRepository extends JpaRepository<LecNotes,Integer>{
 
+
 }

@@ -1,13 +1,7 @@
 package com.kelaniya.backend.service;
 
-import com.kelaniya.backend.entity.Announcement;
-import com.kelaniya.backend.entity.Courses;
-import com.kelaniya.backend.entity.LecNotes;
-import com.kelaniya.backend.entity.StudentsRecords;
-import com.kelaniya.backend.repository.AnnouncementRepository;
-import com.kelaniya.backend.repository.CourseRepository;
-import com.kelaniya.backend.repository.LecNoteRepository;
-import com.kelaniya.backend.repository.StudentsRecordsRepository;
+import com.kelaniya.backend.entity.*;
+import com.kelaniya.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +22,9 @@ public class LectureService {
 
     @Autowired
     private AnnouncementRepository announcementRepository;
+
+    @Autowired
+    private AssignmentRepository assignmentRepository;
 
 
 
@@ -51,9 +48,9 @@ public class LectureService {
 
 
     //get selected file
-    public Optional<LecNotes> getFile(Integer fileId) {
+    public Optional<LecNotes> getFile(Integer courseID) {
 
-        return lecNoteRepository.findById(fileId);
+        return lecNoteRepository.findById(courseID);
     }
 
 
@@ -84,6 +81,12 @@ public class LectureService {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+
+    public List<Courses> getSelectedSubjectDetails(String courseID){
+        return courseRepository.getDetailsAboutSelectedCourseModule(courseID);
     }
 
 
@@ -136,6 +139,26 @@ public class LectureService {
             Announcement announcement = new Announcement(lecturer_email,title,body,category);
             return announcementRepository.save(announcement);
         }catch(Exception e){e.printStackTrace();}
+        return null;
+    }
+
+
+
+
+
+    //upload assignment file and details
+
+    public Assignment saveAssignmentFile(String subject_id, String assignment_name,
+                                         String assignment_description, String final_submit_date, MultipartFile file) {
+
+        String docname = file.getOriginalFilename();
+        try {
+            Assignment assignment = new Assignment(subject_id,assignment_name,assignment_description,final_submit_date,file.getBytes(),file.getContentType());
+            return assignmentRepository.save(assignment);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

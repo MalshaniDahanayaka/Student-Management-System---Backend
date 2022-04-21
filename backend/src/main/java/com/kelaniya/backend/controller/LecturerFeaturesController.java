@@ -1,6 +1,8 @@
 package com.kelaniya.backend.controller;
 
+import com.kelaniya.backend.entity.Courses;
 import com.kelaniya.backend.entity.LecNotes;
+import com.kelaniya.backend.repository.AssignmentRepository;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class LecturerFeaturesController {
 
     @Autowired
     private LectureService lectureService;
+
+    @Autowired
+    private AssignmentRepository assignmentRepository;
 
 
     //get all subject details
@@ -48,13 +53,13 @@ public class LecturerFeaturesController {
 
 
     //create new course
-    @PostMapping("/lecture/new_course/")
+    @PostMapping("/lectures/new_course/")
     public String addNewCourseModule(@RequestParam("course_id") String courseID,@RequestParam("course_name") String courseName,
                                       @RequestParam("lecturer") String lecturerEmail) {
 
         lectureService.addNewCourse(courseID,courseName,lecturerEmail);
 
-        return "/lecture/new_course/";
+        return "/lectures/new_course/";
     }
 
 
@@ -67,9 +72,15 @@ public class LecturerFeaturesController {
     @DeleteMapping("/drop/{courseID}")
     public String removeCourseModule(@PathVariable String courseID){
 
+        String course_id = courseID;
+        List<Courses> course = lectureService.getSelectedSubjectDetails(courseID);
+        String course_name = course.get(0).getCourse_name();
+        String lecture_course_conducted = course.get(0).getLecturer();
+
+
         lectureService.deleteCourseModule(courseID);
 
-           return "/drop/{courseID}";
+           return "course id : "+course_id +"\n"+"course name : "+course_name+"\n"+"lecture course Conducted : "+lecture_course_conducted;
     }
 
 
@@ -119,5 +130,19 @@ public class LecturerFeaturesController {
 
 
 
+
+
+
+    //add new assignment
+    @PostMapping("/lecture/new_assignment/")
+    public String addNewAssignment(@RequestParam("subject_id") String subject_id,@RequestParam("assignment_name") String assignment_name,
+                                     @RequestParam("assignment_description") String assignment_description,
+                                   @RequestParam("final_submit_date") String final_submit_date,@RequestParam("assignment_file") MultipartFile file) {
+
+
+        lectureService.saveAssignmentFile(subject_id,assignment_name,assignment_description,final_submit_date,file);
+
+        return "/lecture/new_assignment/";
+    }
 
 }
