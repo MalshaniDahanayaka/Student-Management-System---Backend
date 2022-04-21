@@ -27,4 +27,9 @@ public class LectureController {
     return lecturerService.signup(users);
   }
 
+  @PostMapping("api/v1/lecturer/update-details")
+  public Lecturers updateDetails(@RequestBody Lecturers lecturers){
+    return lecturerService.updateDetails(lecturers);
+  }
+
 }

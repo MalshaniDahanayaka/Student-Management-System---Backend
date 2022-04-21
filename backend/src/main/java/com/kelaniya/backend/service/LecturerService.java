@@ -3,6 +3,7 @@ package com.kelaniya.backend.service;
 import com.kelaniya.backend.entity.Lecturers;
 import com.kelaniya.backend.entity.Role;
 import com.kelaniya.backend.entity.Users;
+import com.kelaniya.backend.repository.LectureRepository;
 import com.kelaniya.backend.repository.RoleRepository;
 import com.kelaniya.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class LecturerService {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private LectureRepository lectureRepository;
 
   public Users signup(Users users){
     Role lectureRole = roleRepository.findById("Lecturer").get();
@@ -33,5 +36,9 @@ public class LecturerService {
 
     users.setPassword(userService.getEncodePassword((users.getPassword())));;
     return userRepository.save(users);
+  }
+
+  public Lecturers updateDetails(Lecturers lecturers){
+    return lectureRepository.save(lecturers);
   }
 }
