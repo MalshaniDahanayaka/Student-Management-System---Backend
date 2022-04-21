@@ -5,6 +5,8 @@ import com.kelaniya.backend.entity.LecNotes;
 import com.kelaniya.backend.repository.AssignmentRepository;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,7 +72,7 @@ public class LecturerFeaturesController {
 
     //delete course module
     @DeleteMapping("/drop/{courseID}")
-    public String removeCourseModule(@PathVariable String courseID){
+    public String removeCourseModule(@PathVariable String courseID) throws JSONException {
 
         String course_id = courseID;
         List<Courses> course = lectureService.getSelectedSubjectDetails(courseID);
@@ -80,7 +82,13 @@ public class LecturerFeaturesController {
 
         lectureService.deleteCourseModule(courseID);
 
-           return "course id : "+course_id +"\n"+"course name : "+course_name+"\n"+"lecture course Conducted : "+lecture_course_conducted;
+        String response = new JSONObject()
+                .put("course_id", course_id)
+                .put("course_name", course_name)
+                .put("lecture_course Conducted", lecture_course_conducted)
+                .toString();
+
+           return response;
     }
 
 
