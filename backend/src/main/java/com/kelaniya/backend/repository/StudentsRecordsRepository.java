@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 
-public interface StudentsRecordsRepository extends JpaRepository<StudentsRecords,Integer> {
+public interface StudentsRecordsRepository extends JpaRepository<StudentsRecords,String> {
 
     @Modifying
     @Transactional

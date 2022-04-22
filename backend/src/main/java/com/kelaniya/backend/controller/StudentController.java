@@ -100,7 +100,7 @@ public class StudentController {
 
 
   @GetMapping("/api/v1/docs/{id}")
-  public Optional<LecNotes> getNote(@PathVariable Integer id) {
+  public Optional<LecNotes> getNote(@PathVariable String id) {
 
     return lecNoteRepository.findById(id);
   }

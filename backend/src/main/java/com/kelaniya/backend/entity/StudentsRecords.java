@@ -8,8 +8,6 @@ import javax.persistence.*;
 public class StudentsRecords {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
     private String student_email;
     private String course_id;
     private double score;
@@ -28,13 +26,6 @@ public class StudentsRecords {
     }
 
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getStudent_email() {
         return student_email;

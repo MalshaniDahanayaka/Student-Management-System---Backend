@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface CourseRepository extends JpaRepository<Courses,Integer> {
+public interface CourseRepository extends JpaRepository<Courses,String> {
 
 
     @Transactional
