@@ -1,4 +1,4 @@
-package com.kelaniya.backend.entity;
+package com.kelaniya.backend.entity.request;
 
 public class JwtRequest {
 

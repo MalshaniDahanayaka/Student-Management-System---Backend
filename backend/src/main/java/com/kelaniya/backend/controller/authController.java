@@ -1,7 +1,7 @@
 package com.kelaniya.backend.controller;
 
-import com.kelaniya.backend.entity.JwtRequest;
-import com.kelaniya.backend.entity.JwtResponse;
+import com.kelaniya.backend.entity.request.JwtRequest;
+import com.kelaniya.backend.entity.response.JwtResponse;
 import com.kelaniya.backend.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

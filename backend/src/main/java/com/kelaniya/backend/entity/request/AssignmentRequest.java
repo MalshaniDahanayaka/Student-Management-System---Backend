@@ -1,47 +1,12 @@
-package com.kelaniya.backend.entity;
+package com.kelaniya.backend.entity.request;
 
+public class AssignmentRequest {
 
-import javax.persistence.*;
-
-
-
-@Entity(name = "assignments")
-@Table(name = "assignments")
-public class Assignment {
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
     private String subject_id;
     private String assignment_name;
     private String assignment_description;
     private String final_submit_date;
     private byte[] assignment_file;
-
-
-    public Assignment(String subject_id, String assignment_name, String assignment_description,
-                      String final_submit_date, byte[] bytes) {
-        this.subject_id = subject_id;
-        this.assignment_name = assignment_name;
-        this.assignment_description = assignment_description;
-        this.final_submit_date = final_submit_date;
-        this.assignment_file = bytes;
-
-
-    }
-
-    public Assignment() {
-
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getSubject_id() {
         return subject_id;
@@ -82,5 +47,4 @@ public class Assignment {
     public void setAssignment_file(byte[] assignment_file) {
         this.assignment_file = assignment_file;
     }
-
 }

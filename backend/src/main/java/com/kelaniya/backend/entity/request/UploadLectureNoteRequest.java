@@ -1,34 +1,13 @@
-package com.kelaniya.backend.entity;
+package com.kelaniya.backend.entity.request;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "lecture_notes")
-public class LecNotes {
+public class UploadLectureNoteRequest {
 
-
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
     private String subjectName;
     private String description;
     private byte[] data;
     private Date date;
-
-
-    public LecNotes(String subjectName, String description,byte[] data) {
-        super();
-        this.subjectName = subjectName;
-        this.description = description;
-        this.data = data;
-
-    }
-
-    public LecNotes() {
-
-    }
 
 
     public String getSubjectName() {
@@ -47,7 +26,6 @@ public class LecNotes {
         this.description = description;
     }
 
-
     public byte[] getData() {
         return data;
     }
@@ -55,6 +33,7 @@ public class LecNotes {
     public void setData(byte[] data) {
         this.data = data;
     }
+
 
 
     public Date getDate() {

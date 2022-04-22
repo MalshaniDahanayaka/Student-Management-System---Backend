@@ -1,38 +1,11 @@
-package com.kelaniya.backend.entity;
+package com.kelaniya.backend.entity.request;
 
-import javax.persistence.*;
+public class AnnouncementRequest {
 
-@Entity
-@Table(name = "announcement")
-public class Announcement {
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
     private String lecturer_email;
     private String title;
     private String body;
     private String category;
-
-    public Announcement(String lecturer_email, String title, String body, String category) {
-        this.lecturer_email = lecturer_email;
-        this.title = title;
-        this.body = body;
-        this.category = category;
-    }
-
-    public Announcement() {
-
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getLecturer_email() {
         return lecturer_email;
