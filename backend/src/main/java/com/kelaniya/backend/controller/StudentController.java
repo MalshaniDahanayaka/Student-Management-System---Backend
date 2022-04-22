@@ -92,12 +92,6 @@ public class StudentController {
   }
 
 
-//  //get all enrolled courses by student's id
-//  @GetMapping("/api/v1/student/enroll-subjects{id}")
-//  public List<StudentsEnrollSubjects> getAllEnrolledSubjects(@PathVariable Integer id){
-//    return StudentsEnrollSubjects.findById(id);
-//  }
-
   @GetMapping("/api/v1/docs")
   public List<LecNotes> getNotes() {
 
