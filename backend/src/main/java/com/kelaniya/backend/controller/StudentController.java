@@ -101,15 +101,14 @@ public class StudentController {
 
 
 
-    @GetMapping("/downloadFile/{fileId}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Integer fileId){
-      LecNotes doc = lectureService.getFile(fileId).get();
-
-      return ResponseEntity.ok()
-              .contentType(MediaType.parseMediaType(doc.getDocType()))
-              .header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=")
-              .body(new ByteArrayResource(doc.getData()));
-    }
+//    @GetMapping("/downloadFile/{fileId}")
+//    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Integer fileId){
+//      LecNotes doc = lectureService.getFile(fileId).get();
+//
+//      return ResponseEntity.ok()
+//              .header(HttpHeaders.CONTENT_DISPOSITION,"attachment:filename=")
+//              .body(new ByteArrayResource(doc.getData()));
+//    }
 
 
 }

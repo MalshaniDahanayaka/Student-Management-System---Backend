@@ -21,6 +21,10 @@ public class Announcement {
         this.category = category;
     }
 
+    public Announcement() {
+
+    }
+
 
     public int getId() {
         return id;

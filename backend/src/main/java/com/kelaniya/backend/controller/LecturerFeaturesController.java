@@ -1,15 +1,15 @@
 package com.kelaniya.backend.controller;
 
-import com.kelaniya.backend.entity.Courses;
-import com.kelaniya.backend.entity.LecNotes;
+import com.kelaniya.backend.entity.*;
+import com.kelaniya.backend.entity.request.*;
+import com.kelaniya.backend.entity.response.CourseResponse;
+import com.kelaniya.backend.entity.response.StudentsRecordsResponse;
 import com.kelaniya.backend.repository.AssignmentRepository;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,12 +38,11 @@ public class LecturerFeaturesController {
 
     //upload lecture notes
     @PostMapping("/lec_notes/uploadFile")
-    public String uploadMultipleFiles(@RequestParam("file") MultipartFile file,@RequestParam("subjectID") String subject,
-                                      @RequestParam("description") String description) {
+    public LecNotes uploadMultipleFiles(@RequestBody UploadLectureNoteRequest uploadLectureNoteRequest) throws JSONException {
 
-        lectureService.saveFile(file,subject,description);
+       return lectureService.saveFile(uploadLectureNoteRequest.getData(),uploadLectureNoteRequest.getSubjectName(),
+          uploadLectureNoteRequest.getDescription());
 
-        return "redirect:/uploadFile";
     }
 
 
@@ -56,12 +55,11 @@ public class LecturerFeaturesController {
 
     //create new course
     @PostMapping("/lectures/new_course/")
-    public String addNewCourseModule(@RequestParam("course_id") String courseID,@RequestParam("course_name") String courseName,
-                                      @RequestParam("lecturer") String lecturerEmail) {
+    public Courses addNewCourseModule(@RequestBody CourseRequest courseRequest) throws JSONException {
 
-        lectureService.addNewCourse(courseID,courseName,lecturerEmail);
+        return lectureService.addNewCourse(courseRequest.getCourse_id(),
+                courseRequest.getCourse_name(), courseRequest.getLecturer());
 
-        return "/lectures/new_course/";
     }
 
 
@@ -72,7 +70,7 @@ public class LecturerFeaturesController {
 
     //delete course module
     @DeleteMapping("/drop/{courseID}")
-    public String removeCourseModule(@PathVariable String courseID) throws JSONException {
+    public CourseResponse removeCourseModule(@PathVariable String courseID) throws JSONException {
 
         String course_id = courseID;
         List<Courses> course = lectureService.getSelectedSubjectDetails(courseID);
@@ -80,15 +78,8 @@ public class LecturerFeaturesController {
         String lecture_course_conducted = course.get(0).getLecturer();
 
 
-        lectureService.deleteCourseModule(courseID);
+        return lectureService.deleteCourseModule(courseID,course_name,lecture_course_conducted);
 
-        String response = new JSONObject()
-                .put("course_id", course_id)
-                .put("course_name", course_name)
-                .put("lecture_course Conducted", lecture_course_conducted)
-                .toString();
-
-           return response;
     }
 
 
@@ -100,11 +91,11 @@ public class LecturerFeaturesController {
 
     //add marks and grades for students
     @PostMapping("/add/marks_and_grades/")
-    public String addMarksAndGrades(@RequestParam("studentEmail") String student_email, @RequestParam("courseID") String course_id,
-                                    @RequestParam("score") double score, @RequestParam("grade") String grade){
-        lectureService.addMarksAndGrades(student_email,course_id,score,grade);
+    public StudentsRecords addMarksAndGrades(@RequestBody StudentsRecordsRequest studentsRecordsRequest) throws JSONException {
 
-        return "/add/marks_and_grade/";
+        return lectureService.addMarksAndGrades(studentsRecordsRequest.getStudent_email(), studentsRecordsRequest.getCourse_id(),
+                studentsRecordsRequest.getScore(), studentsRecordsRequest.getGrade());
+
     }
 
 
@@ -116,10 +107,10 @@ public class LecturerFeaturesController {
 
     //update marks and grades
     @PatchMapping("/update/marks_and_grades/")
-    public String updateMarksAndGrades(@RequestParam("studentEmail") String student_email, @RequestParam("courseID") String course_id,
-                                       @RequestParam("score") double score, @RequestParam("grade") String grade){
-        lectureService.updateMarksAndGrades(student_email,course_id,score,grade);
-        return "/update/marks_and_grades/";
+    public StudentsRecordsResponse updateMarksAndGrades(@RequestBody StudentsRecordsRequest studentsRecordsRequest) throws JSONException {
+
+        return lectureService.updateMarksAndGrades(studentsRecordsRequest.getStudent_email(), studentsRecordsRequest.getCourse_id(),
+                studentsRecordsRequest.getScore(), studentsRecordsRequest.getGrade());
 
     }
 
@@ -129,12 +120,14 @@ public class LecturerFeaturesController {
 
     //create Announcement
     @PostMapping("/lec/Anouncement/")
-    public String makeAnnouncement(@RequestParam("lecturer_email") String lecturer_email,@RequestParam("title") String title,
-                                   @RequestParam("body") String body,@RequestParam("category") String category){
-        lectureService.addAnnouncement(lecturer_email,title,body,category);
+    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest) throws JSONException {
 
-        return "/lec/Anouncement/";
+
+        return lectureService.addAnnouncement(announcementRequest.getLecturer_email(),announcementRequest.getTitle(),
+                announcementRequest.getBody(),announcementRequest.getCategory());
     }
+
+
 
 
 
@@ -143,14 +136,15 @@ public class LecturerFeaturesController {
 
     //add new assignment
     @PostMapping("/lecture/new_assignment/")
-    public String addNewAssignment(@RequestParam("subject_id") String subject_id,@RequestParam("assignment_name") String assignment_name,
-                                     @RequestParam("assignment_description") String assignment_description,
-                                   @RequestParam("final_submit_date") String final_submit_date,@RequestParam("assignment_file") MultipartFile file) {
+    public Assignment addNewAssignment(@RequestBody AssignmentRequest assignmentRequest) throws JSONException {
 
 
-        lectureService.saveAssignmentFile(subject_id,assignment_name,assignment_description,final_submit_date,file);
+       return lectureService.saveAssignmentFile(assignmentRequest.getSubject_id(),assignmentRequest.getAssignment_name(),
+                assignmentRequest.getAssignment_description(),assignmentRequest.getFinal_submit_date(),assignmentRequest.getAssignment_file());
 
-        return "/lecture/new_assignment/";
+
+
+
     }
 
 }

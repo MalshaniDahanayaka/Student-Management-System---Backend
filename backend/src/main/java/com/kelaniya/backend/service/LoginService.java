@@ -1,7 +1,7 @@
 package com.kelaniya.backend.service;
 
-import com.kelaniya.backend.entity.JwtRequest;
-import com.kelaniya.backend.entity.JwtResponse;
+import com.kelaniya.backend.entity.request.JwtRequest;
+import com.kelaniya.backend.entity.response.JwtResponse;
 import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.repository.UserRepository;
 import com.kelaniya.backend.utils.JwtUtil;

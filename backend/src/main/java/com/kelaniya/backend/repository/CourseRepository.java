@@ -21,4 +21,6 @@ public interface CourseRepository extends JpaRepository<Courses,Integer> {
     @Transactional
     @Query("DELETE FROM courses WHERE course_id = ?1")
     public int deleteSelectedCourseModule(String courseID);
+
+
 }

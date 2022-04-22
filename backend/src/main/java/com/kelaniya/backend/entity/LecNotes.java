@@ -15,15 +15,13 @@ public class LecNotes {
     private String subjectName;
     private String description;
     private byte[] data;
-    private String docType;
     private Date date;
 
 
-    public LecNotes(String subjectName, String description,byte[] data,String docType) {
+    public LecNotes(String subjectName, String description,byte[] data) {
         super();
         this.subjectName = subjectName;
         this.description = description;
-        this.docType = docType;
         this.data = data;
 
     }
@@ -58,15 +56,6 @@ public class LecNotes {
         this.data = data;
     }
 
-
-
-    public String getDocType() {
-        return docType;
-    }
-
-    public void setDocType(String docType) {
-        this.docType = docType;
-    }
 
     public Date getDate() {
         return date;

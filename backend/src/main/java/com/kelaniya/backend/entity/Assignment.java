@@ -17,16 +17,20 @@ public class Assignment {
     private String assignment_description;
     private String final_submit_date;
     private byte[] assignment_file;
-    private String docType;
+
 
     public Assignment(String subject_id, String assignment_name, String assignment_description,
-                      String final_submit_date, byte[] bytes, String docType) {
+                      String final_submit_date, byte[] bytes) {
         this.subject_id = subject_id;
         this.assignment_name = assignment_name;
         this.assignment_description = assignment_description;
         this.final_submit_date = final_submit_date;
         this.assignment_file = bytes;
-        this.docType = docType;
+
+
+    }
+
+    public Assignment() {
 
     }
 
@@ -79,11 +83,4 @@ public class Assignment {
         this.assignment_file = assignment_file;
     }
 
-    public String getDocType() {
-        return docType;
-    }
-
-    public void setDocType(String docType) {
-        this.docType = docType;
-    }
 }

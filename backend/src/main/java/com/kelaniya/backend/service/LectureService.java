@@ -1,10 +1,11 @@
 package com.kelaniya.backend.service;
 
 import com.kelaniya.backend.entity.*;
+import com.kelaniya.backend.entity.response.CourseResponse;
+import com.kelaniya.backend.entity.response.StudentsRecordsResponse;
 import com.kelaniya.backend.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,17 +30,13 @@ public class LectureService {
 
 
 
-    //Save uploaded file
-    public LecNotes saveFile(MultipartFile file,String subjectID,String description) {
-        String docname = file.getOriginalFilename();
-        try {
-            LecNotes doc = new LecNotes(subjectID,description,file.getBytes(),file.getContentType());
-            return lecNoteRepository.save(doc);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    //upload lecture notes
+    public LecNotes saveFile(byte[] data,String subjectID,String description) {
+
+            LecNotes doc = new LecNotes(subjectID,description,data);
+            lecNoteRepository.save(doc);
+            return doc;
+
     }
 
 
@@ -72,10 +69,11 @@ public class LectureService {
 
 
     //add new subject
-    public Courses addNewCourse(String courseID,String courseName,String  lectureEmail){
+    public Courses addNewCourse(String courseID, String courseName, String  lectureEmail){
         try {
             Courses course = new Courses(courseID,courseName,lectureEmail);
-            return courseRepository.save(course);
+            courseRepository.save(course);
+            return course;
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -97,9 +95,12 @@ public class LectureService {
 
 
     //delete subject
-    public int deleteCourseModule(String courseID){
+    public CourseResponse deleteCourseModule(String course_id, String course_name, String lecturer){
 
-        return courseRepository.deleteSelectedCourseModule(courseID);
+         courseRepository.deleteSelectedCourseModule(course_id);
+
+         return new CourseResponse(course_id,course_name,lecturer);
+
     }
 
 
@@ -111,7 +112,11 @@ public class LectureService {
     public StudentsRecords addMarksAndGrades(String student_email,String course_id,double score,String grade){
         try{
             StudentsRecords studentsRecords = new StudentsRecords(student_email,course_id,score,grade);
-            return studentsRecordsRepository.save(studentsRecords);
+            studentsRecordsRepository.save(studentsRecords);
+
+            return studentsRecords;
+
+
         }catch (Exception e){e.printStackTrace();}
 
         return null;
@@ -123,11 +128,12 @@ public class LectureService {
 
 
     //update students marks and grades
-    public int updateMarksAndGrades(String student_email,String course_id,double score,String grade){
-        try{
-            return studentsRecordsRepository.updateMarksAndGrades(student_email,course_id,score,grade);
-        }catch (Exception e){e.printStackTrace();}
-        return 0;
+    public StudentsRecordsResponse updateMarksAndGrades(String student_email, String course_id, double score, String grade){
+
+            studentsRecordsRepository.updateMarksAndGrades(student_email,course_id,score,grade);
+
+            return new StudentsRecordsResponse(student_email,course_id,score,grade);
+
     }
 
 
@@ -137,7 +143,8 @@ public class LectureService {
     public Announcement addAnnouncement(String lecturer_email,String title,String body,String category){
         try{
             Announcement announcement = new Announcement(lecturer_email,title,body,category);
-            return announcementRepository.save(announcement);
+            announcementRepository.save(announcement);
+            return announcement;
         }catch(Exception e){e.printStackTrace();}
         return null;
     }
@@ -149,12 +156,13 @@ public class LectureService {
     //upload assignment file and details
 
     public Assignment saveAssignmentFile(String subject_id, String assignment_name,
-                                         String assignment_description, String final_submit_date, MultipartFile file) {
+                                         String assignment_description, String final_submit_date, byte[] assignment_file) {
 
-        String docname = file.getOriginalFilename();
+
         try {
-            Assignment assignment = new Assignment(subject_id,assignment_name,assignment_description,final_submit_date,file.getBytes(),file.getContentType());
-            return assignmentRepository.save(assignment);
+            Assignment assignment = new Assignment(subject_id,assignment_name,assignment_description,final_submit_date,assignment_file);
+            assignmentRepository.save(assignment);
+            return assignment;
         }
         catch(Exception e) {
             e.printStackTrace();
