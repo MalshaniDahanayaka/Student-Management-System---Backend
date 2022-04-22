@@ -10,8 +10,6 @@ import javax.persistence.*;
 public class Assignment {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
     private String subject_id;
     private String assignment_name;
     private String assignment_description;
@@ -35,13 +33,7 @@ public class Assignment {
     }
 
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getSubject_id() {
         return subject_id;

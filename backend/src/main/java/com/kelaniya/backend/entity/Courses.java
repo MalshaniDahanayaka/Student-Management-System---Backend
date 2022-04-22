@@ -7,8 +7,6 @@ import javax.persistence.*;
 public class Courses {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
     private String course_id;
     private String course_name;
     private String lecturer;
@@ -48,11 +46,5 @@ public class Courses {
         this.lecturer = lecturer;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

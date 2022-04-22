@@ -10,8 +10,6 @@ public class LecNotes {
 
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
     private String subjectName;
     private String description;
     private byte[] data;

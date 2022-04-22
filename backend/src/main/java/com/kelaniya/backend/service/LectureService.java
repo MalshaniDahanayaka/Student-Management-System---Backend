@@ -45,7 +45,7 @@ public class LectureService {
 
 
     //get selected file
-    public Optional<LecNotes> getFile(Integer courseID) {
+    public Optional<LecNotes> getFile(String courseID) {
 
         return lecNoteRepository.findById(courseID);
     }
