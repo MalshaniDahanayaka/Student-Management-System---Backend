@@ -2,6 +2,7 @@ package com.kelaniya.backend.controller;
 
 import com.kelaniya.backend.entity.LecNotes;
 import com.kelaniya.backend.entity.Students;
+import com.kelaniya.backend.entity.StudentsEnrollSubjects;
 import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
@@ -84,6 +85,18 @@ public class StudentController {
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
+  //Add enrolled course
+  @PostMapping("/api/v1/student/enroll-subjects")
+  public StudentsEnrollSubjects enrollSubjects(@RequestBody StudentsEnrollSubjects studentsEnrollSubjects){
+    return studentService.enrollSubject(studentsEnrollSubjects);
+  }
+
+
+//  //get all enrolled courses by student's email
+//  @GetMapping("/api/v1/student/enroll-subjects{email}")
+//  public List<StudentsEnrollSubjects> getAllEnrolledSubjects(@PathVariable String email){
+//    return StudentsEnrollSubjects.
+//  }
 
   @GetMapping("/api/v1/docs")
   public List<LecNotes> getNotes() {
