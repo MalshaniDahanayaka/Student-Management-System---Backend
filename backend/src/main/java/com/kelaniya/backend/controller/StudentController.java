@@ -1,5 +1,6 @@
 package com.kelaniya.backend.controller;
 
+import com.kelaniya.backend.configuration.auth.JwtRequestFilter;
 import com.kelaniya.backend.entity.LecNotes;
 import com.kelaniya.backend.entity.Students;
 import com.kelaniya.backend.entity.StudentsEnrollSubjects;
@@ -27,11 +28,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 
 @RestController
 public class StudentController {
+
 
   @Autowired
   private StudentService studentService;
@@ -93,8 +98,10 @@ public class StudentController {
 
 
   @GetMapping("/api/v1/docs")
-  public List<LecNotes> getNotes() {
-
+  public List<LecNotes> getNotes(HttpServletRequest request, HttpServletResponse response) {
+    HttpSession session = request.getSession();
+    String userEmail = (String) session.getAttribute("userEmail");
+    //System.out.println(userEmail);
     return lecNoteRepository.findAll();
   }
 
