@@ -2,9 +2,11 @@ package com.kelaniya.backend.service;
 
 import com.kelaniya.backend.entity.Role;
 import com.kelaniya.backend.entity.Students;
+import com.kelaniya.backend.entity.StudentsEnrollSubjects;
 import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.repository.RoleRepository;
 import com.kelaniya.backend.repository.StudentRepository;
+import com.kelaniya.backend.repository.StudentsEnrollSubjectsRepository;
 import com.kelaniya.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class StudentService {
   @Autowired
   private StudentRepository studentRepository;
 
+  @Autowired
+  private StudentsEnrollSubjectsRepository studentsEnrollSubjectsRepository;
+
   public Users signupStudent(Users users){
     Role StudentRole = roleRepository.findById("Student").get();
 
@@ -39,5 +44,10 @@ public class StudentService {
 
   public Students updateDetails(Students student) {
     return studentRepository.save(student);
+  }
+
+  //enroll new subject
+  public StudentsEnrollSubjects enrollSubject(StudentsEnrollSubjects studentsEnrollSubjects){
+    return  studentsEnrollSubjectsRepository.save(studentsEnrollSubjects);
   }
 }

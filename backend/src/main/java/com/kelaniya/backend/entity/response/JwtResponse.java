@@ -1,4 +1,7 @@
-package com.kelaniya.backend.entity;
+package com.kelaniya.backend.entity.response;
+
+import com.kelaniya.backend.entity.ResponseUser;
+import com.kelaniya.backend.entity.Users;
 
 public class JwtResponse {
   private ResponseUser responseUser;
