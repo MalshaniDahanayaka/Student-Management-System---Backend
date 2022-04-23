@@ -15,6 +15,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Component
@@ -37,6 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 username = jwtUtil.getUsernameFromToken(jwtToken);
+
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
@@ -55,10 +57,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                HttpSession session = request.getSession();
+                session.setAttribute("userEmail",username);
             }
         }
         filterChain.doFilter(request, response);
 
     }
+
+
 
 }

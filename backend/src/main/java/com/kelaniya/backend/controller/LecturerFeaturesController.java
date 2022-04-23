@@ -11,6 +11,9 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -55,7 +58,11 @@ public class LecturerFeaturesController {
 
     //create new course
     @PostMapping("/lectures/new_course/")
-    public Courses addNewCourseModule(@RequestBody CourseRequest courseRequest) throws JSONException {
+    public Courses addNewCourseModule(@RequestBody CourseRequest courseRequest, HttpServletRequest request) throws JSONException {
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
+
 
         return lectureService.addNewCourse(courseRequest.getCourse_id(),
                 courseRequest.getCourse_name(), courseRequest.getLecturer());
@@ -70,7 +77,7 @@ public class LecturerFeaturesController {
 
     //delete course module
     @DeleteMapping("/drop/{courseID}")
-    public CourseResponse removeCourseModule(@PathVariable String courseID) throws JSONException {
+    public CourseResponse removeCourseModule(@PathVariable String courseID, HttpServletRequest request) throws JSONException {
 
         String course_id = courseID;
         List<Courses> course = lectureService.getSelectedSubjectDetails(courseID);
@@ -120,7 +127,10 @@ public class LecturerFeaturesController {
 
     //create Announcement
     @PostMapping("/lec/Anouncement/")
-    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest) throws JSONException {
+    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest ,HttpServletRequest request) throws JSONException {
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
 
 
         return lectureService.addAnnouncement(announcementRequest.getLecturer_email(),announcementRequest.getTitle(),

@@ -74,7 +74,27 @@
         </dependency>
 
 
-    </dependencies>
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
+<!--		</dependency>-->
+
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.session/spring-session-core &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.session</groupId>-->
+<!--			<artifactId>spring-session-core</artifactId>-->
+<!--		</dependency>-->
+
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.session</groupId>-->
+<!--			<artifactId>spring-session-jdbc</artifactId>-->
+<!--		</dependency>-->
+
+
+
+
+	</dependencies>
 
 	<build>
 		<plugins>
