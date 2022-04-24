@@ -5,10 +5,12 @@ import javax.persistence.*;
 
 @Entity(name = "students_enroll_subjects")
 @Table(name = "students_enroll_subjects")
+@IdClass(StudentsEnrollSubjectId.class)
 public class StudentsEnrollSubjects {
 
     @Id
     private String enrolled_course_id;
+    @Id
     private String student_email;
 
     public StudentsEnrollSubjects() {
