@@ -13,7 +13,7 @@ public class JwtResponse {
   }
 
   public JwtResponse(Users users, String newToken, String message) {
-    this.responseUser = new ResponseUser(users.getUsername(), users.getPassword(), users.getRole());
+    this.responseUser = new ResponseUser(users.getUsername(), users.getRole());
     this.jwtToken = newToken;
     this.message = message;
   }

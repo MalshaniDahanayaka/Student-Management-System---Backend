@@ -8,12 +8,10 @@ import java.util.Set;
 
 public class ResponseUser {
   private String username;
-  private String password;
   private Set<Role> role;
 
-  public ResponseUser(String username, String password, Set<Role>  role){
+  public ResponseUser(String username, Set<Role>  role){
     this.username = username;
-    this.password = password;
     this.role = role;
   }
 
@@ -23,14 +21,6 @@ public class ResponseUser {
 
   public void setUsername(String username) {
     this.username = username;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
   }
 
   public Set<Role> getRole() {
