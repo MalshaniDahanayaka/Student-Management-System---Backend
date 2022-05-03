@@ -1,7 +1,9 @@
 package com.kelaniya.backend.controller;
 
+
 import com.kelaniya.backend.entity.*;
 import com.kelaniya.backend.repository.CourseRepository;
+
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.repository.UserRoleRepository;
 import com.kelaniya.backend.service.LectureService;
@@ -96,6 +98,12 @@ public class StudentController {
   public List<Courses> getDepartmentCourses(@PathVariable String department){
 
       return studentService.getUserDepartmentCourseModules(department);
+  }
+
+  //Add enrolled course
+  @PostMapping("/api/v1/student/enroll-subjects")
+  public StudentsEnrollSubjects enrollSubjects(@RequestBody StudentsEnrollSubjects studentsEnrollSubjects){
+    return studentService.enrollSubject(studentsEnrollSubjects);
   }
 
 
