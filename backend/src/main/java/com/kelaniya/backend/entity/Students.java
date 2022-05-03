@@ -1,9 +1,10 @@
 package com.kelaniya.backend.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
-@Entity
+@Entity(name = "students")
+@Table(name = "students")
 public class Students {
   @Id
   private String student_email;
@@ -12,6 +13,7 @@ public class Students {
   private String last_name;
   private String department;
   private String profile_pic;
+
 
   public String getStudent_email() {
     return student_email;
