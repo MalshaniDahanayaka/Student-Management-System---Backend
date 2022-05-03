@@ -14,13 +14,19 @@ public interface CourseRepository extends JpaRepository<Courses,String> {
 
     @Transactional
     @Query("FROM courses WHERE course_id = ?1")
-    List<Courses> getDetailsAboutSelectedCourseModule(String courseID);
+    Courses getDetailsAboutSelectedCourseModule(String courseID);
 
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM courses WHERE course_id = ?1")
-    public int deleteSelectedCourseModule(String courseID);
+    @Query("DELETE FROM courses WHERE course_id = ?1 AND academic_year = ?2")
+    public int deleteSelectedCourseModule(String courseID,String academic_year);
+
+
+    @Query("FROM courses WHERE department_name = ?1")
+    List<Courses> getUserDepartmentCourseModules(String departmentID);
+
+
 
 
 }

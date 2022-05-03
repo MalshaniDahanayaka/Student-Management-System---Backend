@@ -1,15 +1,10 @@
-package com.kelaniya.backend.entity.response;
+package com.kelaniya.backend.entity.request;
 
-public class CourseResponse {
+public class CourseDeleteRequest {
 
     private String course_id;
     private String academic_year;
 
-
-    public CourseResponse(String courseID, String academic_year) {
-        this.course_id = courseID;
-        this.academic_year = academic_year;
-    }
 
     public String getCourse_id() {
         return course_id;
@@ -18,7 +13,6 @@ public class CourseResponse {
     public void setCourse_id(String course_id) {
         this.course_id = course_id;
     }
-
 
     public String getAcademic_year() {
         return academic_year;

@@ -1,17 +1,15 @@
 package com.kelaniya.backend.service;
 
-import com.kelaniya.backend.entity.Role;
-import com.kelaniya.backend.entity.Students;
-import com.kelaniya.backend.entity.StudentsEnrollSubjects;
-import com.kelaniya.backend.entity.Users;
-import com.kelaniya.backend.repository.RoleRepository;
-import com.kelaniya.backend.repository.StudentRepository;
-import com.kelaniya.backend.repository.StudentsEnrollSubjectsRepository;
-import com.kelaniya.backend.repository.UserRepository;
+
+import com.kelaniya.backend.entity.*;
+import com.kelaniya.backend.repository.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -29,6 +27,9 @@ public class StudentService {
   private StudentRepository studentRepository;
 
   @Autowired
+  private CourseRepository courseRepository;
+
+  @Autowired
   private StudentsEnrollSubjectsRepository studentsEnrollSubjectsRepository;
 
   public Users signupStudent(Users users){
@@ -42,12 +43,39 @@ public class StudentService {
     return userRepository.save(users);
   }
 
+
+
   public Students updateDetails(Students student) {
     return studentRepository.save(student);
   }
 
-  //enroll new subject
-  public StudentsEnrollSubjects enrollSubject(StudentsEnrollSubjects studentsEnrollSubjects){
-    return  studentsEnrollSubjectsRepository.save(studentsEnrollSubjects);
+
+
+
+  public Courses getSelectedCourseDetails(String courseID){
+
+    return courseRepository.getDetailsAboutSelectedCourseModule(courseID);
+
   }
+
+
+
+
+  public List<StudentsEnrollSubjects> getEnrollCourses(String userEmail){
+
+    return studentsEnrollSubjectsRepository.getStudentEnrollSubjects(userEmail);
+
+  }
+
+
+  public List<Courses> getUserDepartmentCourseModules(String departmentName){
+    return courseRepository.getUserDepartmentCourseModules(departmentName);
+  }
+
+  public List<Courses> getAllCourses(){
+    return courseRepository.findAll();
+  }
+
+
+
 }

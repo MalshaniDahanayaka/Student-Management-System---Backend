@@ -72,9 +72,13 @@
             <version>0.0.20131108.vaadin1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
 
 
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc &ndash;&gt;-->
+        <!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc &ndash;&gt;-->
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
