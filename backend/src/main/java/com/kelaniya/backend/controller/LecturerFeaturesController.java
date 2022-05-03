@@ -3,13 +3,21 @@ package com.kelaniya.backend.controller;
 import com.kelaniya.backend.entity.*;
 import com.kelaniya.backend.entity.request.*;
 import com.kelaniya.backend.entity.response.CourseResponse;
+import com.kelaniya.backend.entity.response.LectureNotesResponse;
 import com.kelaniya.backend.entity.response.StudentsRecordsResponse;
 import com.kelaniya.backend.repository.AssignmentRepository;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,10 +49,42 @@ public class LecturerFeaturesController {
 
     //upload lecture notes
     @PostMapping("/lec_notes/uploadFile")
-    public LecNotes uploadMultipleFiles(@RequestBody UploadLectureNoteRequest uploadLectureNoteRequest) throws JSONException {
+    public LectureNotesResponse uploadLectureNotes(@RequestPart("subjectName") String subjectName,@RequestPart("description") String description
+            ,@RequestPart("academic_year") String academic_year,@RequestPart("file") MultipartFile file) throws Exception {
+       LecNotes lecNotes = null;
+       String download_URL = "";
+       LectureNotesRequestBody lectureNotesRequestBody = new LectureNotesRequestBody(subjectName,description,academic_year
+       ,file);
+       lecNotes = lectureService.saveFile(lectureNotesRequestBody);
 
-       return lectureService.saveFile(uploadLectureNoteRequest.getData(),uploadLectureNoteRequest.getSubjectName(),
-          uploadLectureNoteRequest.getDescription());
+
+       download_URL = ServletUriComponentsBuilder.fromCurrentContextPath()
+               .path("/download/")
+               .path(lecNotes.getFile_name())
+               .toUriString();
+
+       return new LectureNotesResponse(lecNotes.getSubjectName(),lecNotes.getDescription(),
+               lecNotes.getAcademic_year(),lecNotes.getFile_name(),download_URL,lecNotes.getFile_size(),lecNotes.getDate());
+
+
+    }
+
+
+
+
+
+    //download file
+    @GetMapping("/download/{fileName}")
+    public ResponseEntity<Resource> downloadLectureNoteFile(@PathVariable String fileName) throws Exception {
+        LecNotes lecNotes = null;
+        lecNotes = lectureService.downloadLectureNote(fileName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(lecNotes.getFile_type()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + lecNotes.getFile_name()
+                                + "\"")
+                .body(new ByteArrayResource(lecNotes.getData()));
 
     }
 
@@ -56,19 +96,15 @@ public class LecturerFeaturesController {
 
 
 
-    //create new course
+ //   create new course
     @PostMapping("/lectures/new_course/")
     public Courses addNewCourseModule(@RequestBody CourseRequest courseRequest, HttpServletRequest request) throws JSONException {
 
         HttpSession session = request.getSession();
         String userEmail = (String) session.getAttribute("userEmail");
 
-
-        return lectureService.addNewCourse(courseRequest.getCourse_id(),
-                courseRequest.getCourse_name(), courseRequest.getLecturer());
-
+        return lectureService.addNewCourse(courseRequest,userEmail);
     }
-
 
 
 
@@ -76,16 +112,10 @@ public class LecturerFeaturesController {
 
 
     //delete course module
-    @DeleteMapping("/drop/{courseID}")
-    public CourseResponse removeCourseModule(@PathVariable String courseID, HttpServletRequest request) throws JSONException {
+    @DeleteMapping("/drop/course/")
+    public CourseResponse removeCourseModule(@RequestBody CourseDeleteRequest courseDeleteRequest, HttpServletRequest request) throws JSONException {
 
-        String course_id = courseID;
-        List<Courses> course = lectureService.getSelectedSubjectDetails(courseID);
-        String course_name = course.get(0).getCourse_name();
-        String lecture_course_conducted = course.get(0).getLecturer();
-
-
-        return lectureService.deleteCourseModule(courseID,course_name,lecture_course_conducted);
+        return lectureService.deleteCourseModule(courseDeleteRequest);
 
     }
 
@@ -125,17 +155,17 @@ public class LecturerFeaturesController {
 
 
 
-    //create Announcement
-    @PostMapping("/lec/Anouncement/")
-    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest ,HttpServletRequest request) throws JSONException {
-
-        HttpSession session = request.getSession();
-        String userEmail = (String) session.getAttribute("userEmail");
-
-
-        return lectureService.addAnnouncement(announcementRequest.getLecturer_email(),announcementRequest.getTitle(),
-                announcementRequest.getBody(),announcementRequest.getCategory());
-    }
+//    //create Announcement
+//    @PostMapping("/lec/Anouncement/")
+//    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest ,HttpServletRequest request) throws JSONException {
+//
+//        HttpSession session = request.getSession();
+//        String userEmail = (String) session.getAttribute("userEmail");
+//
+//
+//        return lectureService.addAnnouncement(announcementRequest.getLecturer_email(),announcementRequest.getTitle(),
+//                announcementRequest.getBody(),announcementRequest.getCategory());
+//    }
 
 
 
