@@ -3,14 +3,12 @@ package com.kelaniya.backend.entity.response;
 public class CourseResponse {
 
     private String course_id;
-    private String course_name;
-    private String lecturer;
+    private String academic_year;
 
 
-    public CourseResponse(String courseID, String courseName, String lectureEmail) {
+    public CourseResponse(String courseID, String academic_year) {
         this.course_id = courseID;
-        this.course_name = courseName;
-        this.lecturer = lectureEmail;
+        this.academic_year = academic_year;
     }
 
     public String getCourse_id() {
@@ -21,19 +19,12 @@ public class CourseResponse {
         this.course_id = course_id;
     }
 
-    public String getCourse_name() {
-        return course_name;
+
+    public String getAcademic_year() {
+        return academic_year;
     }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
-    }
-
-    public String getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(String lecturer) {
-        this.lecturer = lecturer;
+    public void setAcademic_year(String academic_year) {
+        this.academic_year = academic_year;
     }
 }
