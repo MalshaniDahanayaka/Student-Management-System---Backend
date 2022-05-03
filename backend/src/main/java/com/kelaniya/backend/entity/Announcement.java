@@ -11,12 +11,14 @@ public class Announcement {
     private String title;
     private String body;
     private String category;
+    private String academic_year;
 
-    public Announcement(String lecturer_email, String title, String body, String category) {
+    public Announcement(String lecturer_email, String title, String body, String category,String academic_year) {
         this.lecturer_email = lecturer_email;
         this.title = title;
         this.body = body;
         this.category = category;
+        this.academic_year = academic_year;
     }
 
     public Announcement() {
@@ -55,5 +57,13 @@ public class Announcement {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getAcademic_year() {
+        return academic_year;
+    }
+
+    public void setAcademic_year(String academic_year) {
+        this.academic_year = academic_year;
     }
 }

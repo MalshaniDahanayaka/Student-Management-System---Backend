@@ -3,7 +3,8 @@ package com.kelaniya.backend.entity;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
+@Entity(name = "users")
+@Table(name = "users")
 public class Users {
   @Id
   private String username;

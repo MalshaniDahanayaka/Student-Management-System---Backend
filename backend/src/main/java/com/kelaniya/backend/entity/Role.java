@@ -2,8 +2,10 @@ package com.kelaniya.backend.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity
+@Entity(name = "role")
+@Table(name = "role")
 public class Role {
    @Id
    private String roleName;
