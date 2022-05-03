@@ -2,8 +2,10 @@ package com.kelaniya.backend.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity
+@Entity(name = "lectures")
+@Table(name = "lectures")
 public class Lecturers {
 
   @Id
