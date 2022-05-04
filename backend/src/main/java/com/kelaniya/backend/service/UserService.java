@@ -4,7 +4,9 @@ import com.kelaniya.backend.entity.Role;
 import com.kelaniya.backend.entity.Students;
 import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.entity.UsersRole;
+import com.kelaniya.backend.entity.response.OtpResponse;
 import com.kelaniya.backend.repository.*;
+import com.kelaniya.backend.utils.email.GmailSMTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -79,4 +81,20 @@ public class UserService {
     return studentRepository.getUserStudentDetails(std_email);
   }
 
+  public OtpResponse verifyUserEmail(String user_email){
+    int min = 1000;
+    int max = 9999;
+
+    // generate random number
+    int otp = (int)(Math.random()*(max-min+1)+min);
+
+    // send otp via email
+    GmailSMTP gmailSMTP = new GmailSMTP(user_email, otp);
+    gmailSMTP.start();
+
+    OtpResponse otpResponse = new OtpResponse();
+    otpResponse.setEmail(user_email);
+    otpResponse.setOtp(otp);
+    return otpResponse;
+  }
 }
