@@ -1,12 +1,23 @@
 package com.kelaniya.backend.entity.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class AssignmentRequest {
 
     private String subject_id;
     private String assignment_name;
     private String assignment_description;
     private String final_submit_date;
-    private byte[] assignment_file;
+    private MultipartFile file;
+
+    public AssignmentRequest(String subject_id,String assignment_name,String assignment_description,String final_submit_date,MultipartFile file){
+        this.subject_id = subject_id;
+        this.assignment_name = assignment_name;
+        this.assignment_description = assignment_description;
+        this.final_submit_date = final_submit_date;
+        this.file = file;
+
+    }
 
     public String getSubject_id() {
         return subject_id;
@@ -40,11 +51,14 @@ public class AssignmentRequest {
         this.final_submit_date = final_submit_date;
     }
 
-    public byte[] getAssignment_file() {
-        return assignment_file;
+
+    public MultipartFile getFile() {
+        return file;
     }
 
-    public void setAssignment_file(byte[] assignment_file) {
-        this.assignment_file = assignment_file;
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
+
+
 }
