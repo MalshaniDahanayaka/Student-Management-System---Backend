@@ -27,4 +27,5 @@ public class CourseResponse {
     public void setAcademic_year(String academic_year) {
         this.academic_year = academic_year;
     }
+
 }
