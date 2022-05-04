@@ -1,13 +1,21 @@
 package com.kelaniya.backend.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity(name="students_records")
 @Table(name = "students_records")
+@NoArgsConstructor
+@Data
 public class StudentsRecords {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
     private String student_email;
     private String course_id;
     private double score;
@@ -23,9 +31,6 @@ public class StudentsRecords {
 
     }
 
-    public StudentsRecords() {
-
-    }
 
 
 
