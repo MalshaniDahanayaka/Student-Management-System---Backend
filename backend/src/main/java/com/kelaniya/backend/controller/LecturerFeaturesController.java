@@ -2,9 +2,7 @@ package com.kelaniya.backend.controller;
 
 import com.kelaniya.backend.entity.*;
 import com.kelaniya.backend.entity.request.*;
-import com.kelaniya.backend.entity.response.CourseResponse;
-import com.kelaniya.backend.entity.response.LectureNotesResponse;
-import com.kelaniya.backend.entity.response.StudentsRecordsResponse;
+import com.kelaniya.backend.entity.response.*;
 import com.kelaniya.backend.repository.AssignmentRepository;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
@@ -20,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -110,7 +107,6 @@ public class LecturerFeaturesController {
 
 
 
-
     //delete course module
     @DeleteMapping("/drop/course/")
     public CourseResponse removeCourseModule(@RequestBody CourseDeleteRequest courseDeleteRequest, HttpServletRequest request) throws JSONException {
@@ -122,6 +118,17 @@ public class LecturerFeaturesController {
 
 
 
+    //view lecturer teaching  courses
+    @GetMapping("/lecturer/courses")
+    public List<Courses> getLecturerTeachingCourses(HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
+
+        return lectureService.lecturerTeachingCourses(userEmail);
+
+    }
+
 
 
 
@@ -130,14 +137,9 @@ public class LecturerFeaturesController {
     @PostMapping("/add/marks_and_grades/")
     public StudentsRecords addMarksAndGrades(@RequestBody StudentsRecordsRequest studentsRecordsRequest) throws JSONException {
 
-        return lectureService.addMarksAndGrades(studentsRecordsRequest.getStudent_email(), studentsRecordsRequest.getCourse_id(),
-                studentsRecordsRequest.getScore(), studentsRecordsRequest.getGrade());
+        return lectureService.addMarksAndGrades(studentsRecordsRequest);
 
     }
-
-
-
-
 
 
 
@@ -155,17 +157,12 @@ public class LecturerFeaturesController {
 
 
 
-//    //create Announcement
-//    @PostMapping("/lec/Anouncement/")
-//    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest ,HttpServletRequest request) throws JSONException {
-//
-//        HttpSession session = request.getSession();
-//        String userEmail = (String) session.getAttribute("userEmail");
-//
-//
-//        return lectureService.addAnnouncement(announcementRequest.getLecturer_email(),announcementRequest.getTitle(),
-//                announcementRequest.getBody(),announcementRequest.getCategory());
-//    }
+
+    //show enroll students with marks
+    @GetMapping("lecturer/course_marks_and_grades/{course_id}")
+    public List<CourseEnrollStudentsMarksAndGrades> getSelectedCourseStudentsMarksAndGrades(@PathVariable String course_id){
+        return lectureService.getEnrollStudentsMarksAndGrades(course_id);
+    }
 
 
 
@@ -174,17 +171,103 @@ public class LecturerFeaturesController {
 
 
 
-    //add new assignment
-    @PostMapping("/lecture/new_assignment/")
-    public Assignment addNewAssignment(@RequestBody AssignmentRequest assignmentRequest) throws JSONException {
+
+    //create Announcement
+    @PostMapping("/lec/create_announcement/")
+    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest ,HttpServletRequest request) throws JSONException {
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
 
 
-       return lectureService.saveAssignmentFile(assignmentRequest.getSubject_id(),assignmentRequest.getAssignment_name(),
-                assignmentRequest.getAssignment_description(),assignmentRequest.getFinal_submit_date(),assignmentRequest.getAssignment_file());
+        return lectureService.addAnnouncement(announcementRequest,userEmail);
+    }
 
 
+
+
+
+
+
+    //delete Announcement
+    @DeleteMapping("/lec/delete_announcement/")
+    public DeleteAnnouncementResponse deleteAnnouncement(@RequestBody DeleteAnnouncementRequest deleteAnnouncementRequest , HttpServletRequest request) throws JSONException {
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
+
+        return lectureService.deleteAnnouncement(deleteAnnouncementRequest,userEmail);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //upload new  assignment
+    @PostMapping("/lecture/add_new_assignment")
+    public AssignmentResponse uploadNewAssignment(@RequestPart("subject_id") String subject_id,@RequestPart("assignment_name") String assignment_name
+            ,@RequestPart("assignment_description") String assignment_description,
+                                                  @RequestPart("final_submit_date") String final_submit_date,@RequestPart("file") MultipartFile file) throws Exception {
+        Assignment assignment = null;
+        String download_URL = "";
+        AssignmentRequest assignmentRequest = new AssignmentRequest(subject_id,assignment_name,assignment_description,final_submit_date
+                ,file);
+        assignment = lectureService.saveAssignmentFile(assignmentRequest);
+
+
+        download_URL = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(assignment.getFile_name())
+                .toUriString();
+
+
+
+        return new AssignmentResponse(assignment.getFile_name(),assignment.getSubject_id(),
+                assignment.getAssignment_name(),assignment.getAssignment_description(),assignment.getFinal_submit_date(),download_URL,assignment.getFile_size(),assignment.getDate());
 
 
     }
+
+
+
+
+
+
+
+
+
+    //download assignment file
+    @GetMapping("/download/assignment/{fileName}")
+    public ResponseEntity<Resource> downloadAssignmentFile(@PathVariable String fileName) throws Exception {
+        Assignment assignment = null;
+        assignment = lectureService.downloadAssigment(fileName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(assignment.getFile_type()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + assignment.getFile_name()
+                                + "\"")
+                .body(new ByteArrayResource(assignment.getData()));
+
+    }
+
+
+
+
+
+
+
+
+
 
 }
