@@ -1,31 +1,16 @@
-package com.kelaniya.backend.entity;
+package com.kelaniya.backend.entity.response;
 
-import javax.persistence.*;
+public class DeleteAnnouncementResponse {
 
-@Entity(name = "announcement")
-@Table(name = "announcement")
-public class Announcement {
-
-    @Id
     private String lecturer_email;
     private String title;
-    private String body;
-    private String category;
     private String academic_year;
 
-    public Announcement(String lecturer_email, String title, String body, String category,String academic_year) {
+    public DeleteAnnouncementResponse(String lecturer_email,String title,String academic_year){
         this.lecturer_email = lecturer_email;
         this.title = title;
-        this.body = body;
-        this.category = category;
         this.academic_year = academic_year;
     }
-
-    public Announcement() {
-
-    }
-
-
 
     public String getLecturer_email() {
         return lecturer_email;
@@ -41,22 +26,6 @@ public class Announcement {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     public String getAcademic_year() {

@@ -27,6 +27,10 @@ public interface CourseRepository extends JpaRepository<Courses,String> {
     List<Courses> getUserDepartmentCourseModules(String departmentID);
 
 
+    @Query("FROM courses WHERE lecturer = ?1")
+    List<Courses> getLectureTeachingCourses(String lectureMail);
+
+
 
 
 }

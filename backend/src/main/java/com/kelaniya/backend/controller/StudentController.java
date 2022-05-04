@@ -117,11 +117,6 @@ public class StudentController {
       return studentService.getUserDepartmentCourseModules(department);
   }
 
-  //Add enrolled course
-  @PostMapping("/api/v1/student/enroll-subjects")
-  public StudentsEnrollSubjects enrollSubjects(@RequestBody StudentsEnrollSubjects studentsEnrollSubjects){
-    return studentService.enrollSubject(studentsEnrollSubjects);
-  }
 
 
 

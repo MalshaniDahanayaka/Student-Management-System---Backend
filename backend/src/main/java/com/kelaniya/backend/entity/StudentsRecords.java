@@ -13,11 +13,13 @@ public class StudentsRecords {
     private double score;
     private String grade;
 
+
     public StudentsRecords(String student_email, String course_id, double score, String grade) {
         this.student_email = student_email;
         this.course_id = course_id;
         this.score = score;
         this.grade = grade;
+
 
     }
 
@@ -59,4 +61,6 @@ public class StudentsRecords {
     public void setScore(double score) {
         this.score = score;
     }
+
+
 }
