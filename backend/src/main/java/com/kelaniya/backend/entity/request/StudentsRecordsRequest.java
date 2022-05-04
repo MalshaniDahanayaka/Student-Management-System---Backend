@@ -7,6 +7,14 @@ public class StudentsRecordsRequest {
     private double score;
     private String grade;
 
+    public StudentsRecordsRequest(String student_email, String enrolled_course_id, double score, String grade) {
+        this.student_email = student_email;
+        this.course_id = enrolled_course_id;
+        this.score = score;
+        this.grade = grade;
+    }
+
+
     public String getStudent_email() {
         return student_email;
     }

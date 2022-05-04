@@ -2,33 +2,32 @@ package com.kelaniya.backend.controller;
 
 
 import com.kelaniya.backend.entity.*;
+import com.kelaniya.backend.entity.request.GetLectureNotesRequest;
+import com.kelaniya.backend.entity.request.GetNotificationsRequestBody;
+import com.kelaniya.backend.entity.request.StudentsRecordsRequest;
+import com.kelaniya.backend.entity.request.UnenrollFromCourse;
 import com.kelaniya.backend.repository.CourseRepository;
 
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.repository.UserRoleRepository;
 import com.kelaniya.backend.service.LectureService;
 import com.kelaniya.backend.service.StudentService;
-import com.kelaniya.backend.service.imgServices.ImageUploadResponse;
-import com.kelaniya.backend.utils.ImgFileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class StudentController {
@@ -60,10 +59,16 @@ public class StudentController {
 
 
 
+
+
   @PostMapping("/api/v1/auth/signup-student")
   public Users addUser(@RequestBody Users users){
     return  studentService.signupStudent(users);
   }
+
+
+
+
 
 
 
@@ -75,11 +80,19 @@ public class StudentController {
 
 
 
+
+
+
+
   //get selected Course details
   @GetMapping("/api/v1/Courses/{courseID}")
   public Courses getSelectedCourse(@PathVariable String courseID ){
     return studentService.getSelectedCourseDetails(courseID);
   }
+
+
+
+
 
 
 
@@ -91,6 +104,10 @@ public class StudentController {
 
     return studentService.getEnrollCourses(userEmail);
   }
+
+
+
+
 
 
   //get department Courses list
@@ -108,6 +125,11 @@ public class StudentController {
 
 
 
+
+
+
+
+
  // @get all Courses list
   @GetMapping("/api/v1/Courses/all")
   public List<Courses> getAllCourses(){
@@ -120,36 +142,91 @@ public class StudentController {
 
 
 
-
-
-  @GetMapping("/api/v1/docs/{id}")
-  public Optional<LecNotes> getNote(@PathVariable String id) {
-
-    return lecNoteRepository.findById(id);
-  }
-
+  //get course details
+    @GetMapping("/api/enrolled_course_details/")
+    public List<LecNotes> getCourseLectureNotes(@RequestBody GetLectureNotesRequest getLectureNotesRequest){
+      return studentService.getCourseLectureNotes(getLectureNotesRequest.getSubject_name(),getLectureNotesRequest.getAcademic_year());
+    }
 
 
 
-  @PostMapping("/api/v1/student/update-details/uploadImageFile")
-  public ResponseEntity<ImageUploadResponse> uploadFile(@RequestParam("file") MultipartFile multipartFile,
-                                                        @RequestParam("description") String description) throws IOException {
-    System.out.println(description);
-
-    String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-    System.out.println(fileName);
-    long size = multipartFile.getSize();
-
-    String fileCode = ImgFileUploadUtil.saveImage(fileName, multipartFile);
 
 
-    ImageUploadResponse response = new ImageUploadResponse();
-    response.setFileName(fileName);
-    response.setSize(size);
-    response.setImgUploadUrl("/downloadFile/" + fileCode);
 
-    return new ResponseEntity<>(response, HttpStatus.OK);
-  }
+
+    //download lecture notes file
+    @GetMapping("/download_lecture_notes/{fileName}")
+    public ResponseEntity<Resource> downloadLectureNoteFile(@PathVariable String fileName) throws Exception {
+        LecNotes lecNotes = null;
+        lecNotes = studentService.downloadLectureNote(fileName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(lecNotes.getFile_type()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + lecNotes.getFile_name()
+                                + "\"")
+                .body(new ByteArrayResource(lecNotes.getData()));
+
+    }
+
+
+
+
+    //download assignment file
+    @GetMapping("/download/course_assignment/{fileName}")
+    public ResponseEntity<Resource> downloadAssignmentFile(@PathVariable String fileName) throws Exception {
+        Assignment assignment = null;
+        assignment = studentService.downloadAssigment(fileName);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(assignment.getFile_type()))
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + assignment.getFile_name()
+                                + "\"")
+                .body(new ByteArrayResource(assignment.getData()));
+
+    }
+
+
+
+
+
+    //Add enrolled course
+    @PostMapping("/api/v1/student/enroll-subjects")
+    public StudentsEnrollSubjects enrollSubjects(@RequestBody StudentsEnrollSubjects studentsEnrollSubjects){
+               StudentsRecordsRequest studentsRecordsRequest = new StudentsRecordsRequest(studentsEnrollSubjects.getStudent_email(),studentsEnrollSubjects.getEnrolled_course_id(), 0.00,"No");
+               lectureService.addMarksAndGrades(studentsRecordsRequest);
+        return studentService.enrollSubject(studentsEnrollSubjects);
+    }
+
+
+    //unrolled from course
+    @DeleteMapping("/api/v1/student/unroll-from-subjects/")
+    public UnenrollFromCourse unenrollSubjects(@RequestBody UnenrollFromCourse unenrollFromCourse){
+        return studentService.unenrollSubject(unenrollFromCourse);
+    }
+
+
+//    //get announcement
+//    @GetMapping("/api/notifications/")
+//    public List<Announcement> getNotifications(@RequestBody GetNotificationsRequestBody getNotificationsRequestBody){
+//        return studentService.getNotifications(getNotificationsRequestBody);
+//  }
+
+
+
+    //get students marks and grades
+    @GetMapping("/api/student_marks_grades/")
+    public List<StudentsRecords> getStudentsMarksAndGrades(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
+        return studentService.getStudentsMarksAndGrades(userEmail);
+    }
+
+
+
+
+
 
 
 
