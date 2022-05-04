@@ -1,11 +1,13 @@
 package com.kelaniya.backend.controller;
 
+
 import com.kelaniya.backend.entity.*;
 import com.kelaniya.backend.entity.request.GetLectureNotesRequest;
 import com.kelaniya.backend.entity.request.GetNotificationsRequestBody;
 import com.kelaniya.backend.entity.request.StudentsRecordsRequest;
 import com.kelaniya.backend.entity.request.UnenrollFromCourse;
 import com.kelaniya.backend.repository.CourseRepository;
+
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.repository.UserRoleRepository;
 import com.kelaniya.backend.service.LectureService;
@@ -114,6 +116,7 @@ public class StudentController {
 
       return studentService.getUserDepartmentCourseModules(department);
   }
+
 
 
 

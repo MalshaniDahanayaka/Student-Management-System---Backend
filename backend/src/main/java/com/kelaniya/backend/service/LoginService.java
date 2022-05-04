@@ -8,7 +8,6 @@ import com.kelaniya.backend.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,12 +33,15 @@ public class LoginService implements UserDetailsService {
   public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception{
     String username = jwtRequest.getUsername();
     String password = jwtRequest.getPassword();
-    authenticate(username, password);
+    String message = authenticate(username, password);
 
+    if(!message.equals("Successful")){
+      return new JwtResponse(message);
+    }
     UserDetails userDetails = loadUserByUsername(username);
     String newToken = jwtUtil.generateToken(userDetails);
     Users users = userRepository.findById(username).get();
-    return new JwtResponse(users, newToken);
+    return new JwtResponse(users, newToken, message);
   }
 
   @Override
@@ -65,14 +67,15 @@ public class LoginService implements UserDetailsService {
     return authorities;
   }
 
-  private void authenticate(String username, String password) throws Exception{
+  private String authenticate(String username, String password) throws Exception{
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 
-    } catch (DisabledException e){
-      throw new Exception("User is disabled");
+      return "Successful";
     } catch (BadCredentialsException e){
-      throw new Exception("Bad credentials");
+      return "Invalid password";
+    } catch (Exception e){
+      return "Username not found";
     }
   }
 }

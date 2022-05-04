@@ -1,6 +1,7 @@
 package com.kelaniya.backend.entity;
 
 
+
 import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +38,10 @@ public class StudentsEnrollSubjects {
     }
 
     public void setStudent_email(String student_email) {
+
         this.student_email = student_email;
     }
+
+
+
 }
