@@ -5,14 +5,23 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class GmailSMTP {
-  public static void sendEmail(String Email, String otp){
+public class GmailSMTP extends Thread{
 
+  private String userEmail;
+  private Integer otp;
+
+  public GmailSMTP(String userEmail, Integer otp){
+    this.userEmail = userEmail;
+    this.otp = otp;
+  }
+
+  @Override
+  public void run() {
     // enter your email and password
     final String username = "";
     final String password = "";
     String fromEmail = username;
-    String toEmail = Email;
+    String toEmail = userEmail;
 
     String host = "smtp.gmail.com";
     String port = "587";
@@ -56,5 +65,4 @@ public class GmailSMTP {
       e.printStackTrace();
     }
   }
-
 }

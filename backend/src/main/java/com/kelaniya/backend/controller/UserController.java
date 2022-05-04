@@ -2,11 +2,11 @@ package com.kelaniya.backend.controller;
 
 import com.kelaniya.backend.entity.Students;
 import com.kelaniya.backend.entity.UsersRole;
+import com.kelaniya.backend.entity.request.OtpRequest;
+import com.kelaniya.backend.entity.response.OtpResponse;
 import com.kelaniya.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -40,5 +40,9 @@ public class UserController {
 
   }
 
+  @PostMapping("api/v1/user/get-otp")
+  public OtpResponse getOtp(@RequestBody OtpRequest otpRequest){
 
+    return userService.verifyUserEmail(otpRequest.getEmail());
+  }
 }
