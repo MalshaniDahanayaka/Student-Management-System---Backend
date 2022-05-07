@@ -225,7 +225,11 @@ public class StudentController {
         return studentService.addNewProfile(student);
     }
 
-    //get student profile
+    //get all students profile
+    @GetMapping("/api/v1/student/get-all-profiles")
+    public List<Students> getAllProfile(){
+      return studentService.getAllProfile();
+    }
 
 
 
