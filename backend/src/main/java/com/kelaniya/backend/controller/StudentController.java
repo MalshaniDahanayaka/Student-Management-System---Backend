@@ -75,7 +75,7 @@ public class StudentController {
 
   @PostMapping("/api/v1/student/update-details")
   public Students updateDetails(@RequestBody Students student){
-      return studentService.updateDetails(student);
+      return studentService.addNewProfile(student);
   }
 
 
@@ -219,6 +219,13 @@ public class StudentController {
     }
 
 
+    //Add new student profile
+    @PostMapping("/api/v1/student/add-profile")
+    public Students addNewProfile(@RequestBody  Students student){
+        return studentService.addNewProfile(student);
+    }
+
+    //get student profile
 
 
 
