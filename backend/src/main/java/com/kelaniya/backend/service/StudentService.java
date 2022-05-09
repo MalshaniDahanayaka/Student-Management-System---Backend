@@ -58,7 +58,7 @@ public class StudentService {
 
 
 
-  public Students updateDetails(Students student) {
+  public Students addNewProfile(Students student) {
     return studentRepository.save(student);
   }
 
@@ -137,6 +137,8 @@ public class StudentService {
     return studentsRecordsRepository.getStudentMarksAndGrades(userEmail);
   }
 
-
+  public List<Students> getAllProfile(){
+    return studentRepository.findAll();
+  }
 
 }

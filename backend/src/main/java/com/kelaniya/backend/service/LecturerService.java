@@ -4,12 +4,14 @@ import com.kelaniya.backend.entity.Lecturers;
 import com.kelaniya.backend.entity.Role;
 import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.repository.LectureRepository;
+import com.kelaniya.backend.repository.LecturerRepository;
 import com.kelaniya.backend.repository.RoleRepository;
 import com.kelaniya.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -27,6 +29,9 @@ public class LecturerService {
   @Autowired
   private LectureRepository lectureRepository;
 
+  @Autowired
+  private LecturerRepository lecturerRepository;
+
   public Users signup(Users users){
     Role lectureRole = roleRepository.findById("Lecturer").get();
 
@@ -38,7 +43,11 @@ public class LecturerService {
     return userRepository.save(users);
   }
 
-  public Lecturers updateDetails(Lecturers lecturers){
-    return lectureRepository.save(lecturers);
+  public Lecturers addNewProfile(Lecturers lecturers){
+    return lecturerRepository.save(lecturers);
+  }
+
+  public List<Lecturers> getAllProfile(){
+    return lecturerRepository.findAll();
   }
 }

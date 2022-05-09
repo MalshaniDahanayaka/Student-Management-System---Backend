@@ -1,6 +1,7 @@
 package com.kelaniya.backend.controller;
 
 import com.kelaniya.backend.entity.Lecturers;
+import com.kelaniya.backend.entity.Students;
 import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.service.LecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class LectureController {
@@ -27,9 +30,15 @@ public class LectureController {
     return lecturerService.signup(users);
   }
 
-  @PostMapping("api/v1/lecturer/update-details")
-  public Lecturers updateDetails(@RequestBody Lecturers lecturers){
-    return lecturerService.updateDetails(lecturers);
+  //Add new lecturer profile
+  @PostMapping("/api/v1/lecturer/add-profile")
+  public Lecturers addNewProfile(@RequestBody  Lecturers lecturer){
+    return lecturerService.addNewProfile(lecturer);
   }
 
+  //get all students profile
+  @GetMapping("/api/v1/lecturer/get-all-profiles")
+  public List<Lecturers> getAllProfile(){
+    return lecturerService.getAllProfile();
+  }
 }
