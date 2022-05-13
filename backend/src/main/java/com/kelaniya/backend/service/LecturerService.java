@@ -46,4 +46,8 @@ public class LecturerService {
   public List<Lecturers> getAllProfile(){
     return lecturerRepository.findAll();
   }
+
+  public Lecturers getLecturerProfile(String lectureEmail){
+    return lecturerRepository.getLecturerProfile(lectureEmail);
+  }
 }
