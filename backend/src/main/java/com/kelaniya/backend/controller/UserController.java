@@ -48,4 +48,8 @@ public class UserController {
     return userService.verifyUserEmail(otpRequest.getEmail());
   }
 
+  @PostMapping("api/v1/auth/signup")
+  public Users signup(@RequestBody SignupRequest signupRequest){
+    return userService.signup(signupRequest);
+  }
 }
