@@ -3,7 +3,6 @@ package com.kelaniya.backend.service;
 import com.kelaniya.backend.entity.Lecturers;
 import com.kelaniya.backend.entity.Role;
 import com.kelaniya.backend.entity.Users;
-import com.kelaniya.backend.repository.LectureRepository;
 import com.kelaniya.backend.repository.LecturerRepository;
 import com.kelaniya.backend.repository.RoleRepository;
 import com.kelaniya.backend.repository.UserRepository;
@@ -27,9 +26,6 @@ public class LecturerService {
   private UserRepository userRepository;
 
   @Autowired
-  private LectureRepository lectureRepository;
-
-  @Autowired
   private LecturerRepository lecturerRepository;
 
   public Users signup(Users users){
@@ -49,5 +45,9 @@ public class LecturerService {
 
   public List<Lecturers> getAllProfile(){
     return lecturerRepository.findAll();
+  }
+
+  public Lecturers getLecturerProfile(String lectureEmail){
+    return lecturerRepository.getLecturerProfile(lectureEmail);
   }
 }

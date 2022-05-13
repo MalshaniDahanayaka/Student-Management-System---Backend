@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -31,9 +33,17 @@ public class LectureController {
   }
 
   //Add new lecturer profile
-  @PostMapping("/api/v1/lecturer/add-profile")
+  @PostMapping("/api/v1/lecturer/update-profile")
   public Lecturers addNewProfile(@RequestBody  Lecturers lecturer){
     return lecturerService.addNewProfile(lecturer);
+  }
+
+  @GetMapping("/api/v1/lecturer/profile")
+  public Lecturers getLecturerProfile(HttpServletRequest request){
+    HttpSession session = request.getSession();
+    String email = (String) session.getAttribute("userEmail");
+
+    return lecturerService.getLecturerProfile(email);
   }
 
   //get all students profile
