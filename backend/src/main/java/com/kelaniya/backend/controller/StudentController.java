@@ -57,22 +57,6 @@ public class StudentController {
     return "For Student";
   }
 
-
-
-
-
-  @PostMapping("/api/v1/auth/signup-student")
-  public Users addUser(@RequestBody Users users){
-    return  studentService.signupStudent(users);
-  }
-
-
-
-
-
-
-
-
   @PostMapping("/api/v1/student/update-details")
   public Students updateDetails(@RequestBody Students student){
       return studentService.addNewProfile(student);

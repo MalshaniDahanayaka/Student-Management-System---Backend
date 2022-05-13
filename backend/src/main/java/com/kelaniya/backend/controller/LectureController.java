@@ -27,11 +27,6 @@ public class LectureController {
     return "For Lecturer";
   }
 
-  @PostMapping("api/v1/auth/signup-lecturer")
-  public Users addUser(@RequestBody Users users){
-    return lecturerService.signup(users);
-  }
-
   //Add new lecturer profile
   @PostMapping("/api/v1/lecturer/update-profile")
   public Lecturers addNewProfile(@RequestBody  Lecturers lecturer){

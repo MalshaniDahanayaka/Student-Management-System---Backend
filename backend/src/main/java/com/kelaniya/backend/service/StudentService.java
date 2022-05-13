@@ -19,9 +19,6 @@ public class StudentService {
   private RoleRepository roleRepository;
 
   @Autowired
-  private UserService userService;
-
-  @Autowired
   private UserRepository userRepository;
 
   @Autowired
@@ -44,17 +41,6 @@ public class StudentService {
 
   @Autowired
   private StudentsRecordsRepository studentsRecordsRepository;
-
-  public Users signupStudent(Users users){
-    Role StudentRole = roleRepository.findById("Student").get();
-
-    Set<Role> roles = new HashSet<>();
-    roles.add(StudentRole);
-    users.setRole(roles);
-
-    users.setPassword(userService.getEncodePassword(users.getPassword()));
-    return userRepository.save(users);
-  }
 
 
 

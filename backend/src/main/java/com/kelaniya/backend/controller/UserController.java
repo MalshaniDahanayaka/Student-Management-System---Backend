@@ -1,8 +1,10 @@
 package com.kelaniya.backend.controller;
 
 import com.kelaniya.backend.entity.Students;
+import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.entity.UsersRole;
 import com.kelaniya.backend.entity.request.OtpRequest;
+import com.kelaniya.backend.entity.request.SignupRequest;
 import com.kelaniya.backend.entity.response.OtpResponse;
 import com.kelaniya.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +47,5 @@ public class UserController {
 
     return userService.verifyUserEmail(otpRequest.getEmail());
   }
+
 }
