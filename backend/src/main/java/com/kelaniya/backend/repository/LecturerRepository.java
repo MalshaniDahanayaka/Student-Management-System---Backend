@@ -8,6 +8,6 @@ import javax.transaction.Transactional;
 
 public interface LecturerRepository extends JpaRepository<Lecturers,String> {
     @Transactional
-    @Query("FROM lectures where lecturer_email = ?1")
-    Lecturers getUserLecturerDetails(String lectureEmail);
+    @Query("FROM lecturers where lecturer_email = ?1")
+    Lecturers getLecturerProfile(String lectureEmail);
 }
