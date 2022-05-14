@@ -6,8 +6,6 @@ public class SignupRequest {
   private String firstName;
   private String lastName;
   private String id;
-  private String profilePic;
-  private String department;
   private String password;
 
   public String getRole() {
@@ -58,19 +56,4 @@ public class SignupRequest {
     this.id = id;
   }
 
-  public String getProfilePic() {
-    return profilePic;
-  }
-
-  public void setProfilePic(String profilePic) {
-    this.profilePic = profilePic;
-  }
-
-  public String getDepartment() {
-    return department;
-  }
-
-  public void setDepartment(String department) {
-    this.department = department;
-  }
 }

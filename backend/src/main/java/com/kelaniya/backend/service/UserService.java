@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -100,27 +97,23 @@ public class UserService {
   public Users signup(SignupRequest signupRequest){
     Role userRole = null;
     System.out.println(signupRequest.getPassword());
-    if(Objects.equals(signupRequest.getRole(), "Student")){
+    if(Objects.equals(signupRequest.getRole().toLowerCase(), "student")){
       Students student = new Students();
       student.setFirst_name(signupRequest.getFirstName());
       student.setLast_name(signupRequest.getLastName());
       student.setStudent_id(signupRequest.getId());
       student.setStudent_email(signupRequest.getEmail());
-      student.setDepartment(signupRequest.getDepartment());
-      student.setProfile_pic(signupRequest.getProfilePic());
 
       studentRepository.save(student);
 
       userRole = roleRepository.findById("Student").get();
     }
 
-    if(Objects.equals(signupRequest.getRole(), "Lecturer")){
+    if(Objects.equals(signupRequest.getRole().toLowerCase(), "lecturer")){
       Lecturers lecturer = new Lecturers();
       lecturer.setLecturer_email(signupRequest.getEmail());
       lecturer.setFirst_name(signupRequest.getFirstName());
       lecturer.setLast_name(signupRequest.getLastName());
-      lecturer.setDepartment(signupRequest.getDepartment());
-      lecturer.setProfile_pic(signupRequest.getProfilePic());
 
       lecturerRepository.save(lecturer);
 
