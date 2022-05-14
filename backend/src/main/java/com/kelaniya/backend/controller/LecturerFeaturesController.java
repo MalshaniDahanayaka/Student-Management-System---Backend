@@ -183,6 +183,16 @@ public class LecturerFeaturesController {
         return lectureService.addAnnouncement(announcementRequest,userEmail);
     }
 
+    //get all announcement for particular lecturer email
+    @GetMapping("/lecturer/announcements")
+    public List<Announcement> getLecturerTAnnouncements(HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
+
+        return lectureService.lecturerAnnouncement(userEmail);
+
+    }
 
 
 
