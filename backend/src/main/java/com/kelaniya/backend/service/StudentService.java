@@ -124,5 +124,7 @@ public class StudentService {
     return studentRepository.findAll();
   }
 
-
+  public List<Announcement> getAnnouncementForCourse(String category, String academicYear){
+    return announcementRepository.getAnnouncementForCourse(category, academicYear);
+  }
 }

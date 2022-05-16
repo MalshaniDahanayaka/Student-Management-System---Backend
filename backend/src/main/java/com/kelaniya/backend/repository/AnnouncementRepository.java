@@ -23,4 +23,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
 //    @Transactional
 //    @Query("From announcement WHERE (category = ?1 or category = ?2 or category = ?4) AND academic_year = ?3")
 //    public List<Announcement> getAnnouncement(String department_name, String faculty_name, String academic_year,String all);
+
+    @Transactional
+    @Query("FROM announcement WHERE category = ?1 AND academic_year = ?2")
+    List<Announcement> getAnnouncementForCourse(String category, String academic_year);
 }
