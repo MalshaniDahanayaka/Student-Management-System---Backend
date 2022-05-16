@@ -231,9 +231,4 @@ public class StudentController {
       return studentService.getAllProfile();
     }
 
-
-
-
-
-
 }

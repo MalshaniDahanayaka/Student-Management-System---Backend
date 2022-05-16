@@ -42,7 +42,6 @@ public class LectureService {
 
 
 
-
     //upload lecture notes
     public LecNotes saveFile(LectureNotesRequestBody lectureNotesRequestBody) throws Exception {
 
@@ -205,6 +204,11 @@ public class LectureService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    //show lecturer added announcements
+    public List<Announcement> lecturerAnnouncement(String lecturerEmail) {
+        return announcementRepository.getLecturerAnnouncement(lecturerEmail);
     }
 
 
