@@ -1,9 +1,7 @@
 package com.kelaniya.backend.service;
 
-import com.kelaniya.backend.entity.Role;
-import com.kelaniya.backend.entity.Students;
-import com.kelaniya.backend.entity.Users;
-import com.kelaniya.backend.entity.UsersRole;
+import com.kelaniya.backend.entity.*;
+import com.kelaniya.backend.entity.request.SignupRequest;
 import com.kelaniya.backend.entity.response.OtpResponse;
 import com.kelaniya.backend.repository.*;
 import com.kelaniya.backend.utils.email.GmailSMTP;
@@ -11,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -96,5 +92,44 @@ public class UserService {
     otpResponse.setEmail(user_email);
     otpResponse.setOtp(otp);
     return otpResponse;
+  }
+
+  public Users signup(SignupRequest signupRequest){
+    Role userRole = null;
+    System.out.println(signupRequest.getPassword());
+    if(Objects.equals(signupRequest.getRole().toLowerCase(), "student")){
+      Students student = new Students();
+      student.setFirst_name(signupRequest.getFirstName());
+      student.setLast_name(signupRequest.getLastName());
+      student.setStudent_id(signupRequest.getId());
+      student.setStudent_email(signupRequest.getEmail());
+
+      studentRepository.save(student);
+
+      userRole = roleRepository.findById("Student").get();
+    }
+
+    if(Objects.equals(signupRequest.getRole().toLowerCase(), "lecturer")){
+      Lecturers lecturer = new Lecturers();
+      lecturer.setLecturer_email(signupRequest.getEmail());
+      lecturer.setFirst_name(signupRequest.getFirstName());
+      lecturer.setLast_name(signupRequest.getLastName());
+
+      lecturerRepository.save(lecturer);
+
+      userRole = roleRepository.findById("Lecturer").get();
+
+    }
+    Users user = new Users();
+
+    user.setUsername(signupRequest.getEmail());
+
+    // set user role
+    Set<Role> roles = new HashSet<>();
+    roles.add(userRole);
+    user.setRole(roles);
+
+    user.setPassword(getEncodePassword((signupRequest.getPassword())));;
+    return userRepository.save(user);
   }
 }

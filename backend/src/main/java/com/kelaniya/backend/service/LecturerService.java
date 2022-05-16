@@ -20,24 +20,10 @@ public class LecturerService {
   private RoleRepository roleRepository;
 
   @Autowired
-  private UserService userService;
-
-  @Autowired
   private UserRepository userRepository;
 
   @Autowired
   private LecturerRepository lecturerRepository;
-
-  public Users signup(Users users){
-    Role lectureRole = roleRepository.findById("Lecturer").get();
-
-    Set<Role> roles = new HashSet<>();
-    roles.add(lectureRole);
-    users.setRole(roles);
-
-    users.setPassword(userService.getEncodePassword((users.getPassword())));;
-    return userRepository.save(users);
-  }
 
   public Lecturers addNewProfile(Lecturers lecturers){
     return lecturerRepository.save(lecturers);

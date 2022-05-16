@@ -2,24 +2,18 @@ package com.kelaniya.backend.service;
 
 
 import com.kelaniya.backend.entity.*;
-import com.kelaniya.backend.entity.request.GetNotificationsRequestBody;
 import com.kelaniya.backend.entity.request.UnenrollFromCourse;
 import com.kelaniya.backend.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class StudentService {
   @Autowired
   private RoleRepository roleRepository;
-
-  @Autowired
-  private UserService userService;
 
   @Autowired
   private UserRepository userRepository;
@@ -44,17 +38,6 @@ public class StudentService {
 
   @Autowired
   private StudentsRecordsRepository studentsRecordsRepository;
-
-  public Users signupStudent(Users users){
-    Role StudentRole = roleRepository.findById("Student").get();
-
-    Set<Role> roles = new HashSet<>();
-    roles.add(StudentRole);
-    users.setRole(roles);
-
-    users.setPassword(userService.getEncodePassword(users.getPassword()));
-    return userRepository.save(users);
-  }
 
 
 
@@ -140,5 +123,6 @@ public class StudentService {
   public List<Students> getAllProfile(){
     return studentRepository.findAll();
   }
+
 
 }
