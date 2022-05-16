@@ -28,7 +28,31 @@ public class LecNotes {
     private byte[] data;
 
 
-    public LecNotes(String subjectName, String description,String file_name,String file_type,String academic_year,byte[] data,long file_size,String date) {
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
+    }
+
+    public String getFile_type() {
+        return file_type;
+    }
+
+    public void setFile_type(String file_type) {
+        this.file_type = file_type;
+    }
+
+    public long getFile_size() {
+        return file_size;
+    }
+
+    public void setFile_size(long file_size) {
+        this.file_size = file_size;
+    }
+
+    public LecNotes(String subjectName, String description, String file_name, String file_type, String academic_year, byte[] data, long file_size, String date) {
         super();
         this.subjectName = subjectName;
         this.description = description;

@@ -2,10 +2,8 @@ package com.kelaniya.backend.controller;
 
 
 import com.kelaniya.backend.entity.*;
-import com.kelaniya.backend.entity.request.GetLectureNotesRequest;
-import com.kelaniya.backend.entity.request.GetNotificationsRequestBody;
-import com.kelaniya.backend.entity.request.StudentsRecordsRequest;
-import com.kelaniya.backend.entity.request.UnenrollFromCourse;
+import com.kelaniya.backend.entity.request.*;
+import com.kelaniya.backend.repository.AnnouncementRepository;
 import com.kelaniya.backend.repository.CourseRepository;
 
 import com.kelaniya.backend.repository.LecNoteRepository;
@@ -48,7 +46,8 @@ public class StudentController {
   @Autowired
   private UserRoleRepository userRoleRepository;
 
-
+  @Autowired
+  private AnnouncementRepository announcementRepository;
 
 
   @GetMapping("/api/v1/student")
@@ -215,4 +214,10 @@ public class StudentController {
       return studentService.getAllProfile();
     }
 
+    @PostMapping("/api/v1/course/announcement")
+    public List<Announcement> getAnnouncementForCourse(
+            @RequestBody GetAnnouncementForCourseRequest getAnnouncementForCourseRequest){
+      return announcementRepository.getAnnouncementForCourse(
+              getAnnouncementForCourseRequest.getCategory(), getAnnouncementForCourseRequest.getAcademicYear());
+    }
 }
