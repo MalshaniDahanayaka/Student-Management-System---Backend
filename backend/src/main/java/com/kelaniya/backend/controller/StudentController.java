@@ -171,10 +171,13 @@ public class StudentController {
 
     //Add enrolled course
     @PostMapping("/api/v1/student/enroll-subjects")
-    public StudentsEnrollSubjects enrollSubjects(@RequestBody StudentsEnrollSubjects studentsEnrollSubjects){
-               StudentsRecordsRequest studentsRecordsRequest = new StudentsRecordsRequest(studentsEnrollSubjects.getStudent_email(),studentsEnrollSubjects.getEnrolled_course_id(), 0.00,"No");
-               lectureService.addMarksAndGrades(studentsRecordsRequest);
-        return studentService.enrollSubject(studentsEnrollSubjects);
+    public StudentsEnrollSubjects enrollSubjects(@RequestBody StudentsEnrollSubjectRequest studentsEnrollSubjectRequest, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
+
+        StudentsRecordsRequest studentsRecordsRequest = new StudentsRecordsRequest(userEmail,studentsEnrollSubjectRequest.getEnrolled_course_id(), 0.00,"No");
+        lectureService.addMarksAndGrades(studentsRecordsRequest);
+        return studentService.enrollSubject(userEmail,studentsEnrollSubjectRequest);
     }
 
 

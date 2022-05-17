@@ -3,7 +3,7 @@ package com.kelaniya.backend.repository;
 import com.kelaniya.backend.entity.Courses;
 import com.kelaniya.backend.entity.Students;
 import com.kelaniya.backend.entity.StudentsEnrollSubjects;
-import com.kelaniya.backend.entity.StudentsEnrollSubjectsPK;
+
 import com.kelaniya.backend.entity.response.CourseEnrollStudentsMarksAndGrades;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface StudentsEnrollSubjectsRepository extends JpaRepository<StudentsEnrollSubjects, StudentsEnrollSubjectsPK> {
+public interface StudentsEnrollSubjectsRepository extends JpaRepository<StudentsEnrollSubjects, Long> {
 
     @Transactional
     @Query("FROM students_enroll_subjects where student_email = ?1")
