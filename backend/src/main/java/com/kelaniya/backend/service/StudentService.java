@@ -2,6 +2,7 @@ package com.kelaniya.backend.service;
 
 
 import com.kelaniya.backend.entity.*;
+import com.kelaniya.backend.entity.request.StudentsEnrollSubjectRequest;
 import com.kelaniya.backend.entity.request.UnenrollFromCourse;
 import com.kelaniya.backend.repository.*;
 
@@ -97,7 +98,9 @@ public class StudentService {
 
 
   //enroll new subject
-  public StudentsEnrollSubjects enrollSubject(StudentsEnrollSubjects studentsEnrollSubjects){
+  public StudentsEnrollSubjects enrollSubject(String userEmail, StudentsEnrollSubjectRequest studentsEnrollSubjectRequest){
+    StudentsEnrollSubjects studentsEnrollSubjects = new StudentsEnrollSubjects(userEmail,studentsEnrollSubjectRequest.getEnrolled_course_id(),
+            studentsEnrollSubjectRequest.getAcademic_year());
     return  studentsEnrollSubjectsRepository.save(studentsEnrollSubjects);
   }
 
