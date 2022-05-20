@@ -6,10 +6,7 @@ import com.kelaniya.backend.entity.Users;
 import com.kelaniya.backend.service.LecturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,5 +42,10 @@ public class LectureController {
   @GetMapping("/api/v1/lecturer/get-all-profiles")
   public List<Lecturers> getAllProfile(){
     return lecturerService.getAllProfile();
+  }
+
+  @GetMapping("/api/v1/lecturer/profile-by-email/{email}")
+  public Lecturers getLecturerProfileByEmail(@PathVariable String email){
+    return lecturerService.getLecturerProfileByEmail(email);
   }
 }

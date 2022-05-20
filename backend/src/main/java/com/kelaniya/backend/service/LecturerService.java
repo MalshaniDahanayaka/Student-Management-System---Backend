@@ -36,4 +36,8 @@ public class LecturerService {
   public Lecturers getLecturerProfile(String lectureEmail){
     return lecturerRepository.getLecturerProfile(lectureEmail);
   }
+
+  public Lecturers getLecturerProfileByEmail(String email){
+    return lecturerRepository.getLecturerProfile(email);
+  }
 }
