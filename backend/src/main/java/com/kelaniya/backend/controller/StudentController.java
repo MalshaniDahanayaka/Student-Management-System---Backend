@@ -71,6 +71,7 @@ public class StudentController {
   @GetMapping("/api/v1/Courses/{courseID}")
   public Courses getSelectedCourse(@PathVariable String courseID ){
     return studentService.getSelectedCourseDetails(courseID);
+
   }
 
 

@@ -3,12 +3,16 @@ package com.kelaniya.backend.entity.response;
 public class StudentsMarksForLecturer {
 
     private String student_id;
+    private String first_name;
+    private String last_name;
     private String course_id;
     private double score;
     private String grade;
 
-    public StudentsMarksForLecturer(String student_id, String course_id, double score, String grade){
+    public StudentsMarksForLecturer(String student_id, String first_name,String last_name,String course_id, double score, String grade){
         this.student_id = student_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.course_id = course_id;
         this.score = score;
         this.grade = grade;
@@ -44,5 +48,21 @@ public class StudentsMarksForLecturer {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 }
