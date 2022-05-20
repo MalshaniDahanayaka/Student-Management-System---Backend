@@ -6,6 +6,7 @@ import com.kelaniya.backend.entity.response.*;
 import com.kelaniya.backend.repository.AssignmentRepository;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
+import com.kelaniya.backend.utils.data.DataApi;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -159,9 +161,9 @@ public class LecturerFeaturesController {
 
 
     //show enroll students with marks
-    @GetMapping("lecturer/course_marks_and_grades/{course_id}")
-    public List<CourseEnrollStudentsMarksAndGrades> getSelectedCourseStudentsMarksAndGrades(@PathVariable String course_id){
-        return lectureService.getEnrollStudentsMarksAndGrades(course_id);
+    @GetMapping("/lecturer/course_marks_and_grades/{course_id}")
+    public List<StudentsMarksForLecturer> getSelectedCourseStudentsMarksAndGrades(@PathVariable String course_id) throws SQLException {
+        return new DataApi().getData(course_id);
     }
 
 
