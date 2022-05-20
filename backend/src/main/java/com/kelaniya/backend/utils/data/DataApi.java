@@ -17,7 +17,7 @@ public class DataApi {
 
 
 
-        String sql = "SELECT students.student_id,students_records.course_id, students_records.score, students_records.grade\n" +
+        String sql = "SELECT students.student_id,students.first_name,students.last_name,students_records.course_id, students_records.score, students_records.grade\n" +
                 "    FROM students_records\n" +
                 "    INNER JOIN students ON students_records.student_email=students.student_email WHERE students_records.course_id = ?";
 
@@ -29,6 +29,8 @@ public class DataApi {
         while (rs.next()) {
            StudentsMarksForLecturer studentsMarksForLecturer = new StudentsMarksForLecturer(
                    rs.getString("student_id"),
+                   rs.getString("first_name"),
+                   rs.getString("last_name"),
                    rs.getString("course_id"),
                    rs.getDouble("score"),
                    rs.getString("grade")
