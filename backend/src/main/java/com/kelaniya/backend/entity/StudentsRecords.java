@@ -9,18 +9,21 @@ import javax.persistence.*;
 
 @Entity(name="students_records")
 @Table(name = "students_records")
-@NoArgsConstructor
 @Data
+@IdClass(StudentRecordsPK.class)
 public class StudentsRecords {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
     private String student_email;
+    @Id
     private String course_id;
     private double score;
     private String grade;
 
+
+    public StudentsRecords(){
+
+    }
 
     public StudentsRecords(String student_email, String course_id, double score, String grade) {
         this.student_email = student_email;

@@ -1,5 +1,6 @@
 package com.kelaniya.backend.utils.data;
 
+import com.kelaniya.backend.entity.response.LectureNotesResponse;
 import com.kelaniya.backend.entity.response.StudentsMarksForLecturer;
 
 import java.sql.Connection;
@@ -44,5 +45,5 @@ public class DataApi {
         return stdList;
     }
 
-
+//  public List<LectureNotesResponse> getLecturerNoteDetails()
 }
