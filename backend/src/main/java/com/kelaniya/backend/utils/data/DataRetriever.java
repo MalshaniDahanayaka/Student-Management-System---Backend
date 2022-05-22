@@ -8,7 +8,7 @@ public class DataRetriever {
     private final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private final String DB_URL = "jdbc:mysql://localhost:3306/lms";
     private final String DB_USERNAME = "root";
-    private final String DB_PASSWORD = "thu$hara#16";
+    private final String DB_PASSWORD = "";
     private Connection conn;
 
     public DataRetriever(){
