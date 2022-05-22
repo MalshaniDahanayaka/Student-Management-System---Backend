@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class LectureNotesResponse {
 
-    private String subject_name;
+    private String subjectName;
     private String description;
     private String academic_year;
     private String file_name;
@@ -18,8 +18,8 @@ public class LectureNotesResponse {
     private String date;
 
 
-    public LectureNotesResponse(String subject_name, String description, String academic_year, String file_name, String download_url, long file_size, String date) {
-        this.subject_name = subject_name;
+    public LectureNotesResponse(String subjectName, String description, String academic_year, String file_name, String download_url, long file_size, String date) {
+        this.subjectName = subjectName;
         this.description = description;
         this.academic_year = academic_year;
         this.file_name = file_name;
@@ -29,11 +29,11 @@ public class LectureNotesResponse {
     }
 
     public String getSubject_name() {
-        return subject_name;
+        return subjectName;
     }
 
-    public void setSubject_name(String subject_name) {
-        this.subject_name = subject_name;
+    public void setSubject_name(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     public String getDescription() {
