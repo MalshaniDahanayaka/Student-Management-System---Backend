@@ -285,10 +285,11 @@ public class LectureService {
 
 
 
-    //get course enroll students marks and grades
-    public List<CourseEnrollStudentsMarksAndGrades> getEnrollStudentsMarksAndGrades(String course_id){
 
-        return studentsEnrollSubjectsRepository.getEnrollStudentsMarksAndGrades(course_id);
+
+
+    public List<StudentsEnrollSubjects> getEnrollStudentsList(String courseID,String academicYear){
+        return studentsEnrollSubjectsRepository.getEnrollStudentsList(courseID,academicYear);
     }
 
 
