@@ -1,6 +1,7 @@
 package com.kelaniya.backend.utils.data;
 
 import com.kelaniya.backend.entity.response.LectureNotesResponse;
+import com.kelaniya.backend.entity.response.LecturerNoteDetailsResponse;
 import com.kelaniya.backend.entity.response.StudentsMarksForLecturer;
 
 import java.sql.Connection;
@@ -45,5 +46,33 @@ public class DataApi {
         return stdList;
     }
 
-//  public List<LectureNotesResponse> getLecturerNoteDetails()
+  public List<LecturerNoteDetailsResponse> getLecturerNoteDetails(String courseName, String academicYear) throws SQLException{
+    Connection connection = new DataRetriever().getDatabaseConnection();
+    List<LecturerNoteDetailsResponse> noteDetails = new ArrayList<>();
+
+    String sql = "SELECT subject_name, date, description, file_name, academic_year, file_size, file_type \n" +
+            "FROM lecture_notes WHERE subject_name = ? AND academic_year = ?";
+
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    preparedStatement.setString(1, courseName);
+    preparedStatement.setString(2, academicYear);
+    ResultSet rs = preparedStatement.executeQuery();
+
+    while (rs.next()){
+      LecturerNoteDetailsResponse lecturerNoteDetailsResponse = new LecturerNoteDetailsResponse(
+        rs.getString("subject_name"),
+        rs.getString("description"),
+        rs.getString("academic_year"),
+        rs.getString("file_name"),
+        rs.getLong("file_size"),
+        rs.getTimestamp("date").toString(),
+        rs.getString("file_type")
+      );
+
+      noteDetails.add(lecturerNoteDetailsResponse);
+
+    }
+
+    return noteDetails;
+  }
 }
