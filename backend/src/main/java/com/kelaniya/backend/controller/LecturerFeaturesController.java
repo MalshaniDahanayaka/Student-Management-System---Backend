@@ -275,11 +275,10 @@ public class LecturerFeaturesController {
 
 
 
-
-
-
-
-
+    @GetMapping("/api/v1/lecturer/note-details/{courseName}/{academicYear}")
+    public List<LecturerNoteDetailsResponse> getNoteDetails(@PathVariable String courseName, @PathVariable String academicYear) throws SQLException {
+      return new DataApi().getLecturerNoteDetails(courseName, academicYear);
+    }
 
 
 }

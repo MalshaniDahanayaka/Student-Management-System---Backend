@@ -2,7 +2,6 @@ package com.kelaniya.backend.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
@@ -10,8 +9,6 @@ import javax.persistence.*;
 @Table(name = "students_enroll_subjects")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-
 public class StudentsEnrollSubjects {
 
 
@@ -22,6 +19,9 @@ public class StudentsEnrollSubjects {
     private String enrolled_course_id;
     private String academic_year;
 
+    public StudentsEnrollSubjects(){
+
+    }
 
     public StudentsEnrollSubjects(String student_email, String enrolled_course_id, String academic_year) {
         this.student_email = student_email;
