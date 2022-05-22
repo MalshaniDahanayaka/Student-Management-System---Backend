@@ -109,6 +109,16 @@
 			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mashape.unirest</groupId>
+			<artifactId>unirest-java</artifactId>
+			<version>1.4.9</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sargue</groupId>
+			<artifactId>mailgun</artifactId>
+			<version>1.10.0</version>
+		</dependency>
 
 	</dependencies>
 

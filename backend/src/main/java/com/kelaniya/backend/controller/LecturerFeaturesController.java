@@ -7,6 +7,8 @@ import com.kelaniya.backend.repository.AssignmentRepository;
 import com.kelaniya.backend.repository.LecNoteRepository;
 import com.kelaniya.backend.service.LectureService;
 import com.kelaniya.backend.utils.data.DataApi;
+import com.kelaniya.backend.utils.email.mailgun.SendEmailsToStudents;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -176,14 +178,26 @@ public class LecturerFeaturesController {
 
     //create Announcement
     @PostMapping("/lec/create_announcement/")
-    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest ,HttpServletRequest request) throws JSONException {
+    public Announcement makeAnnouncement(@RequestBody AnnouncementRequest announcementRequest ,HttpServletRequest request) throws  UnirestException {
 
         HttpSession session = request.getSession();
         String userEmail = (String) session.getAttribute("userEmail");
+        List<StudentsEnrollSubjects> enrollStudents = lectureService.getEnrollStudentsList(announcementRequest.getCategory(),
+                announcementRequest.getAcademic_year());
+        new SendEmailsToStudents(announcementRequest,userEmail,enrollStudents);
 
 
         return lectureService.addAnnouncement(announcementRequest,userEmail);
     }
+
+
+
+
+
+
+
+
+
 
     //get all announcement for particular lecturer email
     @GetMapping("/lecturer/announcements")

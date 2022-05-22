@@ -31,5 +31,9 @@ public interface StudentsEnrollSubjectsRepository extends JpaRepository<Students
      int unenrollFromCourse(String course_id, String userEmail);
 
 
+    @Query("FROM students_enroll_subjects WHERE enrolled_course_id = ?1 AND academic_year = ?2")
+    List<StudentsEnrollSubjects> getEnrollStudentsList(String courseID,String academicYear);
+
+
 
 }
